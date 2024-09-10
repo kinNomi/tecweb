@@ -6,7 +6,7 @@
     <title>Información</title>
     <style>
         body{
-            background-color: #7bc57c;
+            background-color: #20948B;
             margin: 0 15%;
             font-family: Lucida Sans;
         }
@@ -17,11 +17,11 @@
             text-transform: uppercase;
             border-bottom: 1px solid #f0f2eb;
             margin-top: 30px;  
-            color: #194f06; 
+            color: #A1D6E2; 
         }
 
         h2 {
-            color: #6d36b5;
+            color: #BCBABE;
             font-size: 1em;  
         }
     </style>
@@ -29,25 +29,22 @@
 <body>
   <h1>MUCHAS GRACIAS</h1>
   <p>Gracias por entrar al concurso de Tenis Mike® "Chidos mis Tenis". Hemos recibido la siguiente información de tu registro:</p>
-  <h2>Acerca de ti:</h2>
+  <h2><b>Acerca de ti:</b></h2>
   <div>
     <ul>
-        <li>Nombre: </li>
-        <?php echo $_GET['name'];?>
-        <li>E-mail: </li>
-        <?php echo $_GET['email'];?>
-        <li>Teléfono: </li>
-        <?php echo $_GET['phone'];?>
+        <li><b>Nombre:</b> <?php echo $_GET['name'];?> </li>   
+        <li><b>E-mail:</b> <?php echo $_GET['email'];?></li>
+        <li><b>Teléfono:</b> <?php echo $_GET['phone'];?></li>     
     </ul>
-    <p>Tu triste historia: </p>
+    <p><b>Tu triste historia:</b> </p>
     <?php echo $_GET['story'];?>
    </div>
 
-   <h2>Tu diseño de Tenis (si ganas)</h2>
+   <h2><b>Tu diseño de Tenis (si ganas)</b></h2>
   <div>
     <ul>
-        <li>Color: </li>
-        <li>Tamaño: </li>
+        <li><b>Color:</b> </li>
+        <li><b>Tamaño:</b> </li>
     </ul>
    </div>
 
