@@ -44,7 +44,7 @@
   <div>
     <ul>
         <li><b>Color:</b> <?php echo $_GET['color'];?> </li>
-        <li><b>Tamaño:</b> </li>
+        <li><b>Tamaño:</b> <?php echo $_GET['size'];?></li>
     </ul>
    </div>
 
