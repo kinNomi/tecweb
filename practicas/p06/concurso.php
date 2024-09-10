@@ -43,7 +43,7 @@
    <h2><b>Tu diseño de Tenis (si ganas)</b></h2>
   <div>
     <ul>
-        <li><b>Color:</b> </li>
+        <li><b>Color:</b> <?php echo $_GET['color'];?> </li>
         <li><b>Tamaño:</b> </li>
     </ul>
    </div>
