@@ -36,10 +36,23 @@
 
     ?>
 
-
     <h2>Ejercicio 3</h2>
-    <p>Utiliza un ciclo while para encontrar el primer número entero obtenido aleatoriamente,
-    pero que además sea múltiplo de un número dado. </p>
+    <form action="http://localhost/tecweb/practicas/p07/index.php" method="get">
+        <p>Utiliza un ciclo while para encontrar el primer número entero obtenido aleatoriamente,
+        pero que además sea múltiplo de un número dado. </p>
+        Introduce un número: <input type="number" name="numBase"><br>
+        <?php
+            if(isset($_GET['numBase']))
+            {
+                $numBase = $_GET['numBase'];
+                echo cicloWhile($numBase);
+                echo cicloDOWhile($numBase);
+
+            }
+        ?>
+
+    </form>
+    
 
     <h2>Ejercicio 4</h2>
     <p>Crear un arreglo cuyos índices van de 97 a 122 y cuyos valores son las letras de la ‘a’
