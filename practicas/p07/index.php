@@ -59,6 +59,13 @@
     a la ‘z’. Usa la función chr(n) que devuelve el caracter cuyo código ASCII es n para poner
     el valor en cada índice.</p>
 
+    <?php
+    $t_min = 97;
+    $t_max = 122;
+
+    echo arregloASCII($t_min, $t_max);
+
+    ?>
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p07/index.php" method="post">
         Name: <input type="text" name="name"><br>
