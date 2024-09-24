@@ -1,5 +1,4 @@
 <?php
-
     $nombre = $_POST['nombre'];
     $marca = $_POST['marca'];
     $modelo = $_POST['modelo'];
@@ -29,8 +28,8 @@
         echo '<h2>Error:El producto ya está en la BD</h2>';
 
     }else{
-        $sql_insert = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen, eliminado)
-                       VALUES (?, ?, ?, ?, ?, ?, ?, 0)";
+        $sql_insert = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen)
+                       VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         $stmt_insert = $link -> prepare ($sql_insert);
         $stmt_insert -> bind_param("sssdsis", $nombre, $marca, $modelo, $precio, $detalles, $unidades, $imagen);
@@ -44,8 +43,6 @@
         }
 
     }
-
     //cerrar conexion
     $link->close();
-
 ?>
