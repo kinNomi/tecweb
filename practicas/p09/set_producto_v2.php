@@ -21,7 +21,7 @@
     //que el producto no exista ya
     $sql = "SELECT * FROM productos WHERE nombre = ? AND marca = ? AND modelo = ?";
     $stmt = $link -> prepare($sql);
-    $stmt -> $bind_param("sss", $nombre, $marca, $modelo);
+    $stmt -> bind_param("sss", $nombre, $marca, $modelo);
     $stmt -> execute();
     $result = $stmt -> get_result();
 
