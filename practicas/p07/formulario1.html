@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+</head>
+<body>
+    <h1>FORMULARIO</h1>
+    <form action="c:/xampp/htdocs/tecweb/practicas/p07/respuesta.php" method="post">
+        <fieldset>
+        <legend>Información</legend>
+        <ul>
+          Edad: <input type="number" name="edad" required>
+          <br>Sexo: 
+          <select name="sexo" id="sexo" required>
+            <option value="h">Masculino</option>
+            <option value="m">Femenino</option>
+          </select>
+        </ul>
+      </fieldset>
+      <p><input type="submit" value="Enviar"> <input type="reset" value ="Limpiar"></p> <!--Botones-->
+    </form>
+    
+</body>
+</html>
