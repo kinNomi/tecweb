@@ -2,10 +2,8 @@
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 	<?php
-	if(isset($_GET['tope'])){
+	if(isset($_GET['tope']))
 		$tope = $_GET['tope'];
-	}
-		
 
 	if (!empty($tope))
 	{
@@ -20,9 +18,9 @@
 		}
 
 		/** Crear una tabla que no devuelve un conjunto de resultados */
-		if ( $result = $link->query("SELECT * FROM productos WHERE unidades <= $tope") ) 
+		if ( $result = $link->query("SELECT * FROM productos WHERE tope = '{$tope}'") ) 
 		{
-			$productos = $result->fetch_all(MYSQLI_ASSOC);
+			$row = $result->fetch_array(MYSQLI_ASSOC);
 			/** útil para liberar memoria asociada a un resultado con demasiada información */
 			$result->free();
 		}
@@ -32,15 +30,15 @@
 	?>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Productos por unidades</title>
+		<title>Producto</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	</head>
 	<body>
-		<h3>PRODUCTOS</h3>
+		<h3>PRODUCTO</h3>
 
 		<br/>
 		
-		<?php if( isset($productos) && count($productos) > 0 ) : ?>
+		<?php if( isset($row) ) : ?>
 
 			<table class="table">
 				<thead class="thead-dark">
@@ -50,24 +48,22 @@
 					<th scope="col">Marca</th>
 					<th scope="col">Modelo</th>
 					<th scope="col">Precio</th>
-					<th scope="col">Unidades</th>
+					<th scope="col">Untopeades</th>
 					<th scope="col">Detalles</th>
 					<th scope="col">Imagen</th>
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ($productos as $producto): ?>
-						<tr>
-							<th scope="row"><?= $producto['id'] ?></th>
-							<td><?= $producto['nombre'] ?></td>
-							<td><?= $producto['marca'] ?></td>
-							<td><?= $producto['modelo'] ?></td>
-							<td><?= $producto['precio'] ?></td>
-							<td><?= $producto['unidades'] ?></td>
-							<td><?= utf8_encode($producto['detalles']) ?></td>
-							<td><img src=<?= $producto['imagen'] ?> ></td>
-						</tr>
-					<?php endforeach; ?>
+					<tr>
+						<th scope="row"><?= $row['tope'] ?></th>
+						<td><?= $row['nombre'] ?></td>
+						<td><?= $row['marca'] ?></td>
+						<td><?= $row['modelo'] ?></td>
+						<td><?= $row['precio'] ?></td>
+						<td><?= $row['untopeades'] ?></td>
+						<td><?= utf8_encode($row['detalles']) ?></td>
+						<td><img src=<?= $row['imagen'] ?> ></td>
+					</tr>
 				</tbody>
 			</table>
 
