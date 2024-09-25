@@ -12,6 +12,9 @@
 		/** SE CREA EL OBJETO DE CONEXION */
 		@$link = new mysqli('localhost', 'root', 'kin12345', 'marketzone');	
 
+		//caracteres UTF-8
+		$link->set_charset("utf8mb4");
+
 		/** comprobar la conexión */
 		if ($link->connect_errno) 
 		{
@@ -20,7 +23,7 @@
 		}
 
 		/** Crear una tabla que no devuelve un conjunto de resultados */
-		if ( $result = $link->query("SELECT * FROM productos WHERE unidades <= $tope") ) 
+		if ( $result = $link->query("SELECT * FROM productos WHERE eliminado = 0") ) 
 		{
 			$productos = $result->fetch_all(MYSQLI_ASSOC);
 			/** útil para liberar memoria asociada a un resultado con demasiada información */
@@ -36,7 +39,7 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	</head>
 	<body>
-		<h3>PRODUCTOS</h3>
+		<h3>PRODUCTOS NO ELIMINADOS</h3>
 
 		<br/>
 		
@@ -74,7 +77,7 @@
 		<?php elseif(!empty($tope)) : ?>
 
 			 <script>
-                alert('El tope del producto no existe');
+                alert('No existen productos no eliminados');
              </script>
 
 		<?php endif; ?>
