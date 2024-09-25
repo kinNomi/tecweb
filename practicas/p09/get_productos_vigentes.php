@@ -68,7 +68,7 @@
 				</tbody>
 			</table>
 
-		<?php elseif(!empty($tope)) : ?>
+		<?php else: ?>
 
 			 <script>
                 alert('No existen productos no eliminados');
