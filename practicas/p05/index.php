@@ -146,6 +146,25 @@
         echo '$c: '.(int)$c.'<br>';
         echo '$e: '.(int)$e.'<br>';
     ?>
+
+<h2>Ejercicio 7</h2>
+    <p>Usando la variable predefinida $_SERVER, determina lo siguiente:</p>
+    <p>a) La versión de Apache y PHP</p>
+    <?php
+      echo '<b>Versión de Apache y PHP: </b>'.$_SERVER['SERVER_SOFTWARE'].'<br>';  
+    ?>
+    <p>b) El nombre del sistema operativo (servidor)</p>
+    <?php
+        echo '<b>Sistema operativo: </b>'.php_uname().'<br>';  
+    ?>
+    <p>c) El idioma del navegador (cliente)</p>
+    <?php
+        echo '<b>Idioma navegador: </b>'.$_SERVER['HTTP_ACCEPT_LANGUAGE'].'<br>';  
+
+
+    ?>
+
+
     
 
 </body>
