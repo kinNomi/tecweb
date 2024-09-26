@@ -58,6 +58,26 @@
         echo '$b: '.$b.'<br>';
         echo '$c: '.$c.'<br>';
     ?> 
-
+    
+    <h2>Ejercicio 3</h2>
+    <p>Muestra el contenido de cada variable inmediatamente después de cada asignación,
+    verificar la evolución del tipo de estas variables (imprime todos los componentes de los
+    arreglo):</p>
+    <p>$a = “PHP5”<br>$z[] = &$a<br>$b = “5a version de PHP”<br>$c = $b*10<br>$a .= $b<br>$b *= $c<br>$z[0] = “MySQL”</p>
+    <?php
+        $a = "PHP5";
+        $z[] = &$a;
+        $b = "5a version de PHP";
+        $c = $b * 10;
+        $a .= $b;
+        $b *= $c;
+        $z[0] = "MySQL";
+    
+        echo '$a: '.$a.'<br>';
+        echo '$b: '.$b.'<br>';
+        echo '$c: '.$c.'<br>';
+        echo '$z[0]: '.$z[0].'<br>';
+       
+    ?>
 </body>
 </html>
