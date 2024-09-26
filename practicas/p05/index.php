@@ -76,8 +76,21 @@
         echo '$a: '.$a.'<br>';
         echo '$b: '.$b.'<br>';
         echo '$c: '.$c.'<br>';
-        echo '$z[0]: '.$z[0].'<br>';
-       
+        echo '$z[0]: '.$z[0].'<br>';   
     ?>
+
+<h2>Ejercicio 4</h2>
+    <p>Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
+    la matriz $GLOBALS o del modificador global de PHP</p>
+
+    <?php
+        
+        echo '$a: '.$GLOBALS['a'].'<br>';
+        echo '$b: '.$GLOBALS['b'].'<br>';
+        echo '$c: '.$GLOBALS['c'].'<br>';
+    ?>
+
+
+
 </body>
 </html>
