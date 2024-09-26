@@ -30,5 +30,142 @@
         echo '<li>$house*5 es inválida porque el símbolo * no está permitido.</li>';
         echo '</ul>';
     ?>
+
+<h2>Ejercicio 2</h2>
+    <p>Proporcionar los valores de $a, $b, $c</p>
+    <p>$a = “ManejadorSQL”<br>$b = 'MySQL’<br>$c = &$a</p>
+    <?php
+        $a = "ManejadorSQL";
+        $b = 'MySQL';
+        $c = &$a;
+    ?>
+    <p>a) Ahora muestra el contenido de cada variable</p>
+    <?php
+        echo '$a: '.$a.'<br>';
+        echo '$b: '.$b.'<br>';
+        echo '$c: '.$c.'<br>';
+    ?> 
+
+    <p>b) Agrega al código actual las siguientes asignaciones:</p>
+    <p>$a = “PHP server”<br>$b = &$a</p>
+    <?php
+         $a = "PHP server";
+         $b = &$a;
+    ?>
+    <p>c) Vuelve a mostrar el contenido de cada uno</p>
+    <?php
+        echo '$a: '.$a.'<br>';
+        echo '$b: '.$b.'<br>';
+        echo '$c: '.$c.'<br>';
+    ?> 
+    
+    <h2>Ejercicio 3</h2>
+    <p>Muestra el contenido de cada variable inmediatamente después de cada asignación,
+    verificar la evolución del tipo de estas variables (imprime todos los componentes de los
+    arreglo):</p>
+    <p>$a = “PHP5”<br>$z[] = &$a<br>$b = “5a version de PHP”<br>$c = $b*10<br>$a .= $b<br>$b *= $c<br>$z[0] = “MySQL”</p>
+    <?php
+        $a = "PHP5";
+        $z[] = &$a;
+        $b = "5a version de PHP";
+        $c = $b * 10;
+        $a .= $b;
+        $b *= $c;
+        $z[0] = "MySQL";
+    
+        echo '$a: '.$a.'<br>';
+        echo '$b: '.$b.'<br>';
+        echo '$c: '.$c.'<br>';
+        echo '$z[0]: '.$z[0].'<br>';   
+    ?>
+
+<h2>Ejercicio 4</h2>
+    <p>Lee y muestra los valores de las variables del ejercicio anterior, pero ahora con la ayuda de
+    la matriz $GLOBALS o del modificador global de PHP</p>
+
+    <?php
+        
+        echo '$a: '.$GLOBALS['a'].'<br>';
+        echo '$b: '.$GLOBALS['b'].'<br>';
+        echo '$c: '.$GLOBALS['c'].'<br>';
+    ?>
+
+<h2>Ejercicio 5</h2>
+    <p>Dar el valor de las variables $a, $b, $c al final del siguiente script:</p>
+    <p>$a = “7 personas”<br>$b = (integer) $a<br>$a = “9E3”;<br>$c = (double) $a</p>
+
+    <?php
+        $a = "7 personas";
+        $b = (integer) $a;
+        $a = "9E3";
+        $c = (double) $a;
+    ?>
+
+<h2>Ejercicio 6</h2>
+    <p>Dar y comprobar el valor booleano de las variables $a, $b, $c, $d, $e y $f y muéstralas
+    usando la función var_dump(<datos>).</p>
+    <?php
+        $a = "0";
+        $b = "TRUE";
+        $c = FALSE;
+        $d = ($a OR $b);
+        $e = ($a AND $c);
+        $f = ($a XOR $b);
+
+        //mostrar
+        echo '<h4>Valores booleanos: </h4>';
+        echo '$a: ';
+        var_dump($a);
+        echo '<br>';
+
+        echo '$b: ';
+        var_dump($b);
+        echo '<br>';
+
+        echo '$c: ';
+        var_dump($c);
+        echo '<br>';
+
+        echo '$d: ';
+        var_dump($d);
+        echo '<br>';
+
+        echo '$e: ';
+        var_dump($e);
+        echo '<br>';
+
+        echo '$f: ';
+        var_dump($f);
+        echo '<br>';
+    ?>
+
+    <p>Después investiga una función de PHP que permita transformar el valor booleano de $c y $e
+    en uno que se pueda mostrar con un echo:</p>
+    <?php
+        echo '<h4>Valores booleanos con echo: </h4>';
+        echo '$c: '.(int)$c.'<br>';
+        echo '$e: '.(int)$e.'<br>';
+    ?>
+
+<h2>Ejercicio 7</h2>
+    <p>Usando la variable predefinida $_SERVER, determina lo siguiente:</p>
+    <p>a) La versión de Apache y PHP</p>
+    <?php
+      echo '<b>Versión de Apache y PHP: </b>'.$_SERVER['SERVER_SOFTWARE'].'<br>';  
+    ?>
+    <p>b) El nombre del sistema operativo (servidor)</p>
+    <?php
+        echo '<b>Sistema operativo: </b>'.php_uname().'<br>';  
+    ?>
+    <p>c) El idioma del navegador (cliente)</p>
+    <?php
+        echo '<b>Idioma navegador: </b>'.$_SERVER['HTTP_ACCEPT_LANGUAGE'].'<br>';  
+
+
+    ?>
+
+
+    
+
 </body>
 </html>
