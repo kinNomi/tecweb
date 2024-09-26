@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta vehicular</title>
+</head>
+<body>
+    <h1>Consulta</h1>
+    <form action="http://localhost/tecweb/practicas/p07/vehiculos.php" method="post">
+        
+        <fieldset>
+            <legend>Matrícula</legend>
+            <label for='placa'>Ingrese matrícula: </label>  
+            <input type="text" name="placa" id="placa" maxlength="7">
+            <input type="submit" name="una" value="Buscar">
+            <input type="reset"  value="Borrar">  
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Todas</legend>
+            <input type="submit" name="todas" value="Buscar">
+        </fieldset>
+      
+    </form>
+    
+</body>
+</html>
