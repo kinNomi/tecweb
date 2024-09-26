@@ -1,6 +1,6 @@
 <?php
-$vehiculo = array(
-    "UBN6338" => array(
+$vehiculos = array(
+    "NIC6338" => array(
         "Auto" => array(
             "marca" => "Toyota",
             "modelo" => 2008,
@@ -181,5 +181,25 @@ $vehiculo = array(
             "direccion" => "Calle Flor 11"
         )
     )
-)
+);
+
+echo "<h2>Vehículos registrados:</h2>";
+echo "<pre>";
+print_r($vehiculos);
+echo "</pre>";
+
+/*
+echo "<h2>Vehículos registrados:</h2>";
+foreach($vehiculos as $placa => $datos){
+    echo "<b>Placa: $placa </b><br>";
+    echo "Marca: ".$datos['Auto']['marca']."<br>";
+    echo "Modelo: ".$datos['Auto']['modelo']."<br>";
+    echo "Tipo: ".$datos['Auto']['tipo']."<br>";
+    echo "Propietario: ".$datos['Propietario']['nombre']."<br>";
+    echo "Ciudad: ".$datos['Propietario']['ciudad']."<br>";
+    echo "Dirección: ".$datos['Propietario']['direccion']."<br><br>";
+
+}
+*/
+
 ?>
