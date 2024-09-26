@@ -183,23 +183,57 @@ $vehiculos = array(
     )
 );
 
+/*
+//Mostrar todas las placas sin formato
 echo "<h2>Vehículos registrados:</h2>";
 echo "<pre>";
 print_r($vehiculos);
 echo "</pre>";
+*/
 
-/*
-echo "<h2>Vehículos registrados:</h2>";
-foreach($vehiculos as $placa => $datos){
-    echo "<b>Placa: $placa </b><br>";
-    echo "Marca: ".$datos['Auto']['marca']."<br>";
-    echo "Modelo: ".$datos['Auto']['modelo']."<br>";
-    echo "Tipo: ".$datos['Auto']['tipo']."<br>";
-    echo "Propietario: ".$datos['Propietario']['nombre']."<br>";
-    echo "Ciudad: ".$datos['Propietario']['ciudad']."<br>";
-    echo "Dirección: ".$datos['Propietario']['direccion']."<br><br>";
+//mostrar solo una placa
+function buscarUna($placa, $vehiculos){
+    if (array_key_exists($placa,$vehiculos)) {
+        $auto = $vehiculos[$placa];
+        echo "<h2>Vehículo:</h2>";
+        echo "<b>Placa: $placa </b><br>";
+        echo "Marca: ".$auto['Auto']['marca']."<br>";
+        echo "Modelo: ".$auto['Auto']['modelo']."<br>";
+        echo "Tipo: ".$auto['Auto']['tipo']."<br>";
+        echo "Propietario: ".$auto['Propietario']['nombre']."<br>";
+        echo "Ciudad: ".$auto['Propietario']['ciudad']."<br>";
+        echo "Dirección: ".$auto['Propietario']['direccion']."<br><br>";
+    }else {
+        echo "<h2>Lo sentimos, no se encontró la placa: $placa </h2>";
+    }
+
 
 }
-*/
+//mostrar todos los autos con formato 
+function buscarTodos($vehiculos){
+    echo "<h2>Vehículos registrados:</h2>";
+    foreach($vehiculos as $placa => $datos){
+        echo "<b>Placa: $placa </b><br>";
+        echo "Marca: ".$datos['Auto']['marca']."<br>";
+        echo "Modelo: ".$datos['Auto']['modelo']."<br>";
+        echo "Tipo: ".$datos['Auto']['tipo']."<br>";
+        echo "Propietario: ".$datos['Propietario']['nombre']."<br>";
+        echo "Ciudad: ".$datos['Propietario']['ciudad']."<br>";
+        echo "Dirección: ".$datos['Propietario']['direccion']."<br><br>";
+    }
+
+}
+
+//mandar informacion
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (isset($_POST['una'])) {
+        //si se busco una matricula
+        $placa = strtoupper(trim($_POST['placa']));
+        buscarUna($placa, $vehiculos);
+    }elseif (isset($_POST['todas'])) {
+        buscarTodos($vehiculos);
+    }
+}
 
 ?>
