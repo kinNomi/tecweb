@@ -32,7 +32,8 @@
 		$stmt->execute();
 		$result = $stmt->get_result();
 		$productos = $result->fetch_all(MYSQLI_ASSOC);
-		$stmt->free();
+		// Cerrar el statement para liberar recursos
+		$stmt->close();
 	}
 
 	$link->close();
