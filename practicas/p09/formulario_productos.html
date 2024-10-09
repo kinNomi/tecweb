@@ -37,7 +37,7 @@
         //modelo
         var modeloRegex = /^[a-zA-Z0-9]+$/;
         if (modelo === "" || !modeloRegex.test(modelo) || modelo.length > 25) {
-          alert("Ingrese modelo, dee tener 25 caracteres o menos");
+          alert("Ingrese modelo, debe tener 25 caracteres o menos");
           return false;
         }
 
@@ -66,14 +66,6 @@
           document.getElementById('imagen').value = "img/default.png"; // Ruta por defecto
         }
 
-
-        
-        if (nombre === "" || modelo === "" || marca === ""){
-            alert("Campos obligatorios");
-            return false;
-
-        }
-
         return true;
     }
 
@@ -85,7 +77,7 @@
   <body>
     <h1>Registro de productos</h1>
 
-    <form id="formularioProductos" action="" method="post" onsubmit="return validarFormulario()">
+    <form id="formularioProductos" action="http://localhost/tecweb/practicas/p09/set_producto_v2.php" method="post" onsubmit="return validarFormulario()">
 
     <h2>Información del Producto</h2>
 
