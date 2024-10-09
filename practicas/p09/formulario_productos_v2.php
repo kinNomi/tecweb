@@ -17,13 +17,13 @@
 
 <script>
     function validarFormulario(){
-        var nombre = document.getElementById('form-nombre').value;
-        var marca = document.getElementById('form-marca').value;
-        var modelo = document.getElementById('form-modelo').value;
-        var precio = document.getElementById('form-precio').value;
-        var detalles = document.getElementById('form-detalles').value;
-        var unidades = document.getElementById('form-unidades').value;
-        var imagen = document.getElementById('form-imagen').value;
+        var nombre = document.getElementById('nombre').value;
+        var marca = document.getElementById('marca').value;
+        var modelo = document.getElementById('modelo').value;
+        var precio = document.getElementById('precio').value;
+        var detalles = document.getElementById('detalles').value;
+        var unidades = document.getElementById('unidades').value;
+        var imagen = document.getElementById('imagen').value;
 
 
         //VALIDACIONES
@@ -63,7 +63,7 @@
         if (imagen === "") {
           /*const img = document.getElementById('imagen');
           const imagenRuta = img.files.length > 0 ? img.files[0].name : 'img/default.png';*/
-          document.getElementById('form-imagen').value = "img/default.png"; // Ruta por defecto
+          document.getElementById('imagen').value = "img/default.png"; // Ruta por defecto
         }
 
         return true;
@@ -85,23 +85,23 @@
         <legend>Auto</legend>
 
         <ul>
-          <li><label for="form-nombre">Nombre:</label> <input type="text" name="nombre" id="form-nombre" onblur="validarFormulario()"></li>
-          <li><label for="form-marca">Marca:</label> 
-            <select name="marca" id="form-marca" required>
-              <option value="Audi">Audi</option>
-              <option value="Toyota">Toyota</option>
-              <option value="Ford">Ford</option>
-              <option value="VW">VW</option>
+          <li><label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre" onblur="validarFormulario()" value="<?= !empty($_POST['nombre']) ? $_POST['nombre'] : '' ?>"></li>
+          <li><label for="marca">Marca:</label> 
+            <select name="marca" id="marca" required>
+              <option <?php if ($_POST['marca'] == 'Audi') echo 'selected'; ?> value="Audi">Audi</option>
+              <option <?php if ($_POST['marca'] == 'Toyota') echo 'selected'; ?> value="Toyota">Toyota</option>
+              <option <?php if ($_POST['marca'] == 'Ford') echo 'selected'; ?> value="Ford">Ford</option>
+              <option <?php if ($_POST['marca'] == 'VW') echo 'selected'; ?> value="VW">VW</option>
             </select>
           </li>
-          <li><label for="form-modelo">Modelo:</label> <input type="text" name="modelo" id="form-modelo" onblur="validarFormulario()"></li>
-          <!-- <li><label for="form-precio">Precio:</label> <input type="number" placeholder="1.00" step="0.01" min="1.00" max="1000000.00" name="precio" id="form-precio" required></li>
+          <li><label for="modelo">Modelo:</label> <input type="text" name="modelo" id="modelo" onblur="validarFormulario()" value="<?= !empty($_POST['modelo']) ? $_POST['modelo'] : '' ?>"></li>
+          <!-- <li><label for="precio">Precio:</label> <input type="number" placeholder="1.00" step="0.01" min="1.00" max="1000000.00" name="precio" id="precio" required></li>
         -->
-          <li><label for="form-precio">Precio:</label> <input type="number" step="0.01" name="precio" id="form-precio" onblur="validarFormulario()"></li>
-          <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="form-unidades" onblur="validarFormulario()"></li>
+          <li><label for="precio">Precio:</label> <input type="number" step="0.01" name="precio" id="precio" onblur="validarFormulario()" value="<?= !empty($_POST['precio']) ? $_POST['precio'] : '' ?>"></li>
+          <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="form-unidades" onblur="validarFormulario()" value="<?= !empty($_POST['unidades']) ? $_POST['unidades'] : '' ?>"></li>
 
-          <li><label for="form-detalles">Detalles:<br></label><textarea name="detalles" rows="3" cols="50" id="form-detalles" onblur="validarFormulario()"></textarea></li>
-          <li><label for="form-imagen">URL imagen:</label><input type="text" name="imagen" id="form-imagen" onblur="validarFormulario()"></li>
+          <li><label for="detalles">Detalles:<br></label><textarea name="detalles" rows="3" cols="50" id="detalles" onblur="validarFormulario()" value="<?= !empty($_POST['detalles']) ? $_POST['detalles'] : '' ?>"></textarea></li>
+          <li><label for="imagen">URL imagen:</label><input type="text" name="imagen" id="imagen" onblur="validarFormulario()"></li>
 
         </ul>
       </fieldset>
