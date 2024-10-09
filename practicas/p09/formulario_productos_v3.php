@@ -77,7 +77,11 @@
   <body>
     <h1>Registro de productos</h1>
 
-    <form id="formularioProductos" action="http://localhost/tecweb/practicas/p09/set_producto_v2.php" method="post" onsubmit="return validarFormulario()">
+    <?php 
+    $idProducto = substr(!empty($_POST['id']) ? $_POST['id'] : '', -2);
+     
+    ?>
+    <form action="update_producto" method="post" onsubmit="return validarFormulario()">
 
     <h2>Información del Producto</h2>
 
@@ -85,6 +89,7 @@
         <legend>Auto</legend>
 
         <ul>
+        <li><label for="id">Id:</label><input type="text" id="id" name="id" readonly value="<?php echo $idProducto; ?>" /></li>
           <li><label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre" onblur="validarFormulario()" value="<?= !empty($_POST['nombre']) ? $_POST['nombre'] : '' ?>"></li>
           <li><label for="marca">Marca:</label> 
             <select name="marca" id="marca" required>
