@@ -122,7 +122,7 @@
 
 				// Configurar y enviar el formulario
 				form.method = 'POST';
-				form.action = 'http://localhost/tecweb/practicas/p10/formulario_productos_v3.php';
+				form.action = 'http://localhost/tecweb/practicas/p09/formulario_productos_v3.php';
 				document.body.appendChild(form);
 				form.submit();
 			}
