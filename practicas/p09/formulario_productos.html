@@ -17,13 +17,13 @@
 
 <script>
     function validarFormulario(){
-        var nombre = document.getElementById('nombre').value;
-        var marca = document.getElementById('marca').value;
-        var modelo = document.getElementById('modelo').value;
-        var precio = document.getElementById('precio').value;
-        var detalles = document.getElementById('detalles').value;
-        var unidades = document.getElementById('unidades').value;
-        var imagen = document.getElementById('imagen').value;
+        var nombre = document.getElementById('form-nombre').value;
+        var marca = document.getElementById('form-marca').value;
+        var modelo = document.getElementById('form-modelo').value;
+        var precio = document.getElementById('form-precio').value;
+        var detalles = document.getElementById('form-detalles').value;
+        var unidades = document.getElementById('form-unidades').value;
+        var imagen = document.getElementById('form-imagen').value;
 
 
         //VALIDACIONES
@@ -85,7 +85,7 @@
   <body>
     <h1>Registro de productos</h1>
 
-    <form id="formularioProductos" action="http://localhost/tecweb/practicas/p09/set_producto_v2.php" method="post" onsubmit="return validarFormulario()">
+    <form id="formularioProductos" action="" method="post" onsubmit="return validarFormulario()">
 
     <h2>Información del Producto</h2>
 
@@ -109,7 +109,7 @@
           <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="form-unidades" onblur="validarFormulario()"></li>
 
           <li><label for="form-detalles">Detalles:<br></label><textarea name="detalles" rows="3" cols="50" id="form-detalles" onblur="validarFormulario()"></textarea></li>
-          <li><label for="form-imagen">URL imagen:</label><input type="text" name="imagen" id="form-imagen" onblur="validarFormulario"></li>
+          <li><label for="form-imagen">URL imagen:</label><input type="text" name="imagen" id="form-imagen" onblur="validarFormulario()"></li>
 
         </ul>
       </fieldset>
