@@ -20,12 +20,56 @@
         var nombre = document.getElementById('nombre').value;
         var marca = document.getElementById('marca').value;
         var modelo = document.getElementById('modelo').value;
+        var precio = document.getElementById('precio').value;
+        var detalles = document.getElementById('detalles').value;
+        var unidades = document.getElementById('unidades').value;
+        var imagen = document.getElementById('imagen').value;
 
+
+        //VALIDACIONES
+
+        //nombre
+        if (nombre === "" || nombre.length > 100) {
+          alert("Ingrese nombre, debe tener menos 100 caracteres");
+          return false;
+        }
+        
+        //modelo
+        var modeloRegex = /^[a-zA-Z0-9]+$/;
+        if (modelo === "" || !modeloRegex.test(modelo) || modelo.length > 25) {
+          alert("Ingrese modelo, dee tener 25 caracteres o menos");
+          return false;
+        }
+
+        //precio
+        if (precio === "" || parseFloat(precio) <= 99.99) {
+          alert("El precio debe ser mayor a 99.99.");
+          return false;
+        }
+
+        //detalles
+        if (detalles.length > 250) {
+          alert("Sus detalles tienen más de 250 caracteres");
+          return false;
+        }
+
+        //unidades
+        if (unidades === "" || parseInt(unidades) < 0) {
+          alert("Las unidades deben ser mayores o iguales a 0");
+          return false;
+        }
+
+        //imagen
+        if (imagen === "") {
+          document.getElementById('imagen').value = "img/default.png"; // Ruta por defecto
+        }
+
+        /*
         if (nombre === "" || modelo === "" || marca === ""){
             alert("Campos obligatorios");
             return false;
 
-        }
+        }*/
         return true;
     }
     
