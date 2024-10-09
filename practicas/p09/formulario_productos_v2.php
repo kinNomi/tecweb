@@ -88,10 +88,10 @@
           <li><label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre" onblur="validarFormulario()" value="<?= !empty($_POST['nombre']) ? $_POST['nombre'] : '' ?>"></li>
           <li><label for="marca">Marca:</label> 
             <select name="marca" id="marca" required>
-              <option <?php if ($_POST['marca'] == 'Audi') echo 'selected'; ?> value="Audi">Audi</option>
-              <option <?php if ($_POST['marca'] == 'Toyota') echo 'selected'; ?> value="Toyota">Toyota</option>
-              <option <?php if ($_POST['marca'] == 'Ford') echo 'selected'; ?> value="Ford">Ford</option>
-              <option <?php if ($_POST['marca'] == 'VW') echo 'selected'; ?> value="VW">VW</option>
+              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'Audi') echo 'selected'; ?> value="Audi">Audi</option>
+              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'Toyota') echo 'selected'; ?> value="Toyota">Toyota</option>
+              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'Ford') echo 'selected'; ?> value="Ford">Ford</option>
+              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'VW') echo 'selected'; ?> value="VW">VW</option>
             </select>
           </li>
           <li><label for="modelo">Modelo:</label> <input type="text" name="modelo" id="modelo" onblur="validarFormulario()" value="<?= !empty($_POST['modelo']) ? $_POST['modelo'] : '' ?>"></li>
