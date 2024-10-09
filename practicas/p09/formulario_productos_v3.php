@@ -81,7 +81,7 @@
     $idProducto = substr(!empty($_POST['id']) ? $_POST['id'] : '', -2);
      
     ?>
-    <form action="update_producto" method="post" onsubmit="return validarFormulario()">
+    <form action="update_producto.php" method="post" onsubmit="return validarFormulario()">
 
     <h2>Información del Producto</h2>
 
