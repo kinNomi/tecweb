@@ -1,4 +1,6 @@
+
 <?php
+/*
 //conexion a la base de datos
 $link = new mysqli('localhost', 'root', 'kin12345', 'marketzone');
 
@@ -26,6 +28,7 @@ if (isset($_GET['id'])) {
 }
 
 $link->close();
+*/
 ?>
 
 
@@ -107,28 +110,53 @@ $link->close();
 
   <body>
     <h1>Editar producto</h1>
-   
+    <?php
+    // Obtener el ID del producto y los datos del producto
+      if (isset($_GET['id'])) {
+          $id = $_GET['id'];
+
+          // Conectar con la base de datos
+          @$link = new mysqli('localhost', 'root', 'kin12345', 'marketzone');
+
+          // Verificar conexión
+          if ($link->connect_errno) {
+            die("Falló la conexión: " . $link->connect_error);
+          }
+
+          // Obtener los datos del producto
+          $stmt = $link->prepare("SELECT * FROM productos WHERE id = ?");
+          $stmt->bind_param("i", $id);
+          $stmt->execute();
+          $result = $stmt->get_result();
+          $producto = $result->fetch_assoc();
+
+          // Cerrar conexión
+          $stmt->close();
+          $link->close();
+      } else {
+          die("Producto no especificado.");
+      }
+    ?>
     <form action="update_producto.php" method="post" onsubmit="return validarFormulario()">
 
     <h2>Información del Producto</h2>
 
       <fieldset>
         <legend>Auto</legend>
-
-        <ul>
         <input type="hidden" name="id" value="<?= $producto['id'] ?>">
-        <li><label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre" value="<?= $producto['nombre'] ?>"></li>
+        <ul>
+          <li><label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre" value="<?= $producto['nombre'] ?>"></li>
           <li><label for="marca">Marca:</label> 
             <select name="marca" id="marca" required>
               <option value="Audi" <?= $producto['marca'] == 'Audi' ? 'selected' : '' ?>>Audi</option>
               <option value="Toyota" <?= $producto['marca'] == 'Toyota' ? 'selected' : '' ?>>Toyota</option>
               <option value="Ford" <?= $producto['marca'] == 'Ford' ? 'selected' : '' ?>>Ford</option>
               <option value="VW" <?= $producto['marca'] == 'VW' ? 'selected' : '' ?>>VW</option>
-            </select>
+          </select>
           </li>
           <li><label for="modelo">Modelo:</label> <input type="text" name="modelo" id="modelo" value="<?= $producto['modelo'] ?>"></li>
           <!-- <li><label for="precio">Precio:</label> <input type="number" placeholder="1.00" step="0.01" min="1.00" max="1000000.00" name="precio" id="precio" required></li>
-        -->
+            -->
           <li><label for="precio">Precio:</label> <input type="number" step="0.01" name="precio" id="precio" value="<?= $producto['precio'] ?>"></li>
           <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="unidades" value="<?= $producto['unidades'] ?>"></li>
 
