@@ -1,3 +1,34 @@
+<?php
+//conexion a la base de datos
+$link = new mysqli('localhost', 'root', 'kin12345', 'marketzone');
+
+//comprobar conexion
+if ($link->connect_errno) {
+    die('Error de conexión: ' . $link->connect_error);
+}
+
+//verificar si se recibió un ID de producto mediante GET
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    //consulta para obtener los datos del producto
+    $sql = "SELECT * FROM productos WHERE id = $id";
+    $result = $link->query($sql);
+
+    // Verificar si se encontró el producto
+    if ($result && $result->num_rows > 0) {
+        $producto = $result->fetch_assoc(); // Obtener datos del producto
+    } else {
+        die('Producto no encontrado');
+    }
+} else {
+    die('No se ha especificado un producto para editar');
+}
+
+$link->close();
+?>
+
+
 <!DOCTYPE html >
 <html>
 
@@ -75,12 +106,13 @@
   </head>
 
   <body>
-    <h1>Registro de productos</h1>
-
+    <h1>Editar producto</h1>
+    <!--
     <?php 
     $idProducto = substr(!empty($_POST['id']) ? $_POST['id'] : '', -2);
      
     ?>
+    -->
     <form action="update_producto.php" method="post" onsubmit="return validarFormulario()">
 
     <h2>Información del Producto</h2>
@@ -89,30 +121,30 @@
         <legend>Auto</legend>
 
         <ul>
-        <li><label for="id">Id:</label><input type="text" id="id" name="id" readonly value="<?php echo $idProducto; ?>" /></li>
-          <li><label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre" onblur="validarFormulario()" value="<?= !empty($_POST['nombre']) ? $_POST['nombre'] : '' ?>"></li>
+        <input type="hidden" name="id" value="<?= $producto['id'] ?>">
+        <li><label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre" value="<?= $producto['nombre'] ?>"></li>
           <li><label for="marca">Marca:</label> 
             <select name="marca" id="marca" required>
-              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'Audi') echo 'selected'; ?> value="Audi">Audi</option>
-              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'Toyota') echo 'selected'; ?> value="Toyota">Toyota</option>
-              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'Ford') echo 'selected'; ?> value="Ford">Ford</option>
-              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'VW') echo 'selected'; ?> value="VW">VW</option>
+              <option value="Audi" <?= $producto['marca'] == 'Audi' ? 'selected' : '' ?>>Audi</option>
+              <option value="Toyota" <?= $producto['marca'] == 'Toyota' ? 'selected' : '' ?>>Toyota</option>
+              <option value="Ford" <?= $producto['marca'] == 'Ford' ? 'selected' : '' ?>>Ford</option>
+              <option value="VW" <?= $producto['marca'] == 'VW' ? 'selected' : '' ?>>VW</option>
             </select>
           </li>
-          <li><label for="modelo">Modelo:</label> <input type="text" name="modelo" id="modelo" onblur="validarFormulario()" value="<?= !empty($_POST['modelo']) ? $_POST['modelo'] : '' ?>"></li>
+          <li><label for="modelo">Modelo:</label> <input type="text" name="modelo" id="modelo" value="<?= $producto['modelo'] ?>"></li>
           <!-- <li><label for="precio">Precio:</label> <input type="number" placeholder="1.00" step="0.01" min="1.00" max="1000000.00" name="precio" id="precio" required></li>
         -->
-          <li><label for="precio">Precio:</label> <input type="number" step="0.01" name="precio" id="precio" onblur="validarFormulario()" value="<?= !empty($_POST['precio']) ? $_POST['precio'] : '' ?>"></li>
-          <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="form-unidades" onblur="validarFormulario()" value="<?= !empty($_POST['unidades']) ? $_POST['unidades'] : '' ?>"></li>
+          <li><label for="precio">Precio:</label> <input type="number" step="0.01" name="precio" id="precio" value="<?= $producto['precio'] ?>"></li>
+          <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="form-unidades" value="<?= $producto['unidades'] ?>"></li>
 
-          <li><label for="detalles">Detalles:<br></label><textarea name="detalles" rows="3" cols="50" id="detalles" onblur="validarFormulario()" value="<?= !empty($_POST['detalles']) ? $_POST['detalles'] : '' ?>"></textarea></li>
-          <li><label for="imagen">URL imagen:</label><input type="text" name="imagen" id="imagen" onblur="validarFormulario()"></li>
+          <li><label for="detalles">Detalles:<br></label><textarea name="detalles" rows="3" cols="50" id="detalles" value="<?= $producto['detalles'] ?>"></textarea></li>
+          <li><label for="imagen">URL imagen:</label><input type="text" name="imagen" id="imagen" value="<?= $producto['imagen'] ?>"></li>
 
         </ul>
       </fieldset>
 
       <p>
-        <input type="submit" value="Registrar">
+        <input type="submit" value="Actualizar">
         <input type="reset" value="Borrar">
       </p>
 
