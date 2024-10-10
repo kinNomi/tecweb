@@ -107,12 +107,7 @@ $link->close();
 
   <body>
     <h1>Editar producto</h1>
-    <!--
-    <?php 
-    $idProducto = substr(!empty($_POST['id']) ? $_POST['id'] : '', -2);
-     
-    ?>
-    -->
+   
     <form action="update_producto.php" method="post" onsubmit="return validarFormulario()">
 
     <h2>Información del Producto</h2>
@@ -135,7 +130,7 @@ $link->close();
           <!-- <li><label for="precio">Precio:</label> <input type="number" placeholder="1.00" step="0.01" min="1.00" max="1000000.00" name="precio" id="precio" required></li>
         -->
           <li><label for="precio">Precio:</label> <input type="number" step="0.01" name="precio" id="precio" value="<?= $producto['precio'] ?>"></li>
-          <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="form-unidades" value="<?= $producto['unidades'] ?>"></li>
+          <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="unidades" value="<?= $producto['unidades'] ?>"></li>
 
           <li><label for="detalles">Detalles:<br></label><textarea name="detalles" rows="3" cols="50" id="detalles" value="<?= $producto['detalles'] ?>"></textarea></li>
           <li><label for="imagen">URL imagen:</label><input type="text" name="imagen" id="imagen" value="<?= $producto['imagen'] ?>"></li>
