@@ -160,7 +160,7 @@ $link->close();
           <li><label for="precio">Precio:</label> <input type="number" step="0.01" name="precio" id="precio" value="<?= $producto['precio'] ?>"></li>
           <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="unidades" value="<?= $producto['unidades'] ?>"></li>
 
-          <li><label for="detalles">Detalles:<br></label><textarea name="detalles" rows="3" cols="50" id="detalles" value="<?= $producto['detalles'] ?>"></textarea></li>
+          <li><label for="detalles">Detalles:<br></label><textarea name="detalles" rows="3" cols="50" id="detalles"<?= !empty($_POST['detalles']) ? $_POST['detalles'] : '' ?>></textarea></li>
           <li><label for="imagen">URL imagen:</label><input type="text" name="imagen" id="imagen" value="<?= $producto['imagen'] ?>"></li>
 
         </ul>
