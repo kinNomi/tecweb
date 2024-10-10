@@ -23,11 +23,21 @@ if(empty($idProducto) || empty($nombre) || empty($marca) || empty($modelo) || em
     die("ERROR: Faltan campos obligatorios.");
 }
 */
+
+//obtener los datos enviados desde el form
+$id = $_POST['id'];
+$nombre = $_POST['nombre'];
+$marca = $_POST['marca'];
+$modelo = $_POST['modelo'];
+$precio = $_POST['precio'];
+$unidades = $_POST['unidades'];
+$detalles = $_POST['detalles'];
+
 // Preparar la consulta SQL para actualizar el registro
 $sql = "UPDATE productos 
         SET nombre='$nombre', marca='$marca', modelo='$modelo', precio='$precio', 
             unidades='$unidades', detalles='$detalles', imagen='$imagen' 
-        WHERE id='$id'";
+        WHERE id=$id";
 
 // Ejecutar la consulta
 if(mysqli_query($link, $sql)){
