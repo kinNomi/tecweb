@@ -152,7 +152,7 @@
 							<td><?= utf8_encode($producto['detalles']) ?></td>
 							<td><img src="<?= $producto['imagen'] ?>" alt="Producto" /></td>
                         	<td>
-                                <a href = "formulario_productos_v2.php?id=<?= $producto ['id'] ?>" class="btn btn-primary">Modificar</a>
+                                <a href = "formulario_productos_v3.php?id=<?= $producto ['id'] ?>" class="btn btn-primary">Modificar</a>
                             <!--<input type="button" value="Modificar" onclick="show(event)" />-->
                         	</td>
                     </tr>
