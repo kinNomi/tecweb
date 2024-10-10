@@ -4,14 +4,15 @@
 	<?php
 
 	// Inicializar productos
-	$productos = array();
+	//$productos = array();
 
-	// Verificar si el parámetro 'tope' está presente en la URL
+	/* Verificar si el parámetro 'tope' está presente en la URL
 	if (isset($_GET['tope'])) {
 		$tope = $_GET['tope'];
 	} else {
 		die('Parámetro "tope" no detectado...');
 	}
+	*/
 		
 	/** SE CREA EL OBJETO DE CONEXION */
 	@$link = new mysqli('localhost', 'root', 'kin12345', 'marketzone');	
@@ -26,7 +27,17 @@
 			/** NOTA: con @ se suprime el Warning para gestionar el error por medio de código */
 	}
 
-	/** Usar prepared statements para realizar una consulta segura */
+	/** Crear una tabla que no devuelve un conjunto de resultados */
+	if ( $result = $link->query("SELECT * FROM productos WHERE eliminado = 0") ) 
+	{
+		$productos = $result->fetch_all(MYSQLI_ASSOC);
+		/** útil para liberar memoria asociada a un resultado con demasiada información */
+		$result->free();
+	}
+
+
+	/*
+	// Usar prepared statements para realizar una consulta segura 
 	if ($stmt = $link->prepare("SELECT * FROM productos WHERE eliminado = 0 AND unidades <= ?")) {
 		$stmt->bind_param("i", $tope);
 		$stmt->execute();
@@ -35,7 +46,7 @@
 		// Cerrar el statement para liberar recursos
 		$stmt->close();
 	}
-
+	*/
 	$link->close();
 	
 	?>
@@ -44,7 +55,7 @@
 		<title>Productos por unidades</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	
-	
+		<!--
 		<script>
 			function show(event) {
 				// Obtener el id de la fila donde está el botón presionado
@@ -127,7 +138,7 @@
 				form.submit();
 			}
 	</script>
-
+				-->
 	</head>
 	<body>
 		<h3>PRODUCTOS NO ELIMINADOS</h3>
@@ -162,7 +173,8 @@
 							<td><?= utf8_encode($producto['detalles']) ?></td>
 							<td><img src="<?= $producto['imagen'] ?>" alt="Producto" /></td>
 							<td>
-								<input type="button" value="Modificar" onclick="show(event)" />
+								<a href = "formulario_productos_v2.php?id=<?= $producto ['id'] ?>" class="btn btn-primary">Modificar</a>
+								<!--<input type="button" value="Modificar" onclick="show(event)" />-->
 							</td>
 						</tr>
 					<?php endforeach; ?>
