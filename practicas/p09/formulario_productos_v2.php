@@ -85,23 +85,23 @@
         <legend>Auto</legend>
 
         <ul>
-          <li><label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre" onblur="validarFormulario()" value="<?= !empty($_POST['nombre']) ? $_POST['nombre'] : '' ?>"></li>
+          <li><label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre" value="<?= !empty($_POST['nombre']) ? $_POST['nombre'] : '' ?>"></li>
           <li><label for="marca">Marca:</label> 
             <select name="marca" id="marca" required>
-              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'Audi') echo 'selected'; ?> value="Audi">Audi</option>
-              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'Toyota') echo 'selected'; ?> value="Toyota">Toyota</option>
-              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'Ford') echo 'selected'; ?> value="Ford">Ford</option>
-              <option <?php if (isset($_POST['marca']) && $_POST['marca'] == 'VW') echo 'selected'; ?> value="VW">VW</option>
+              <option value="Audi" <?= isset($_POST['marca']) && $_POST['marca'] == 'Audi' ? 'selected' : '' ?>>Audi</option>
+              <option value="Toyota" <?= isset($_POST['marca']) && $_POST['marca'] == 'Toyota' ? 'selected' : '' ?>>Toyota</option>
+              <option value="Ford" <?= isset($_POST['marca']) && $_POST['marca'] == 'Ford' ? 'selected' : '' ?>>Ford</option>
+              <option value="VW" <?= isset($_POST['marca']) && $_POST['marca'] == 'VW' ? 'selected' : '' ?>>VW</option>
             </select>
           </li>
-          <li><label for="modelo">Modelo:</label> <input type="text" name="modelo" id="modelo" onblur="validarFormulario()" value="<?= !empty($_POST['modelo']) ? $_POST['modelo'] : '' ?>"></li>
+          <li><label for="modelo">Modelo:</label> <input type="text" name="modelo" id="modelo" value="<?= !empty($_POST['modelo']) ? $_POST['modelo'] : '' ?>"></li>
           <!-- <li><label for="precio">Precio:</label> <input type="number" placeholder="1.00" step="0.01" min="1.00" max="1000000.00" name="precio" id="precio" required></li>
         -->
-          <li><label for="precio">Precio:</label> <input type="number" step="0.01" name="precio" id="precio" onblur="validarFormulario()" value="<?= !empty($_POST['precio']) ? $_POST['precio'] : '' ?>"></li>
-          <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="form-unidades" onblur="validarFormulario()" value="<?= !empty($_POST['unidades']) ? $_POST['unidades'] : '' ?>"></li>
+          <li><label for="precio">Precio:</label> <input type="number" step="0.01" name="precio" id="precio" value="<?= !empty($_POST['precio']) ? $_POST['precio'] : '' ?>"></li>
+          <li><label for="form-unidades">Unidades disponibles:</label> <input type="number" name="unidades" id="form-unidades" value="<?= !empty($_POST['unidades']) ? $_POST['unidades'] : '' ?>"></li>
 
-          <li><label for="detalles">Detalles:<br></label><textarea name="detalles" rows="3" cols="50" id="detalles" onblur="validarFormulario()" value="<?= !empty($_POST['detalles']) ? $_POST['detalles'] : '' ?>"></textarea></li>
-          <li><label for="imagen">URL imagen:</label><input type="text" name="imagen" id="imagen" onblur="validarFormulario()"></li>
+          <li><label for="detalles">Detalles:<br></label><textarea name="detalles" rows="3" cols="50" id="detalles" value="<?= !empty($_POST['detalles']) ? $_POST['detalles'] : '' ?>"></textarea></li>
+          <li><label for="imagen">URL imagen:</label><input type="text" name="imagen" id="imagen" value="<?= !empty($_POST['imagen']) ? $_POST['imagen'] : '' ?>"></li>
 
         </ul>
       </fieldset>
