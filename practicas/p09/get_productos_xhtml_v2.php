@@ -19,16 +19,14 @@
 			    /** NOTA: con @ se suprime el Warning para gestionar el error por medio de código */
 		}
 
-		/** Usar prepared statements para una consulta segura */
-		if ($stmt = $link->prepare("SELECT * FROM productos WHERE unidades <= ?")) {
-			$stmt->bind_param("i", $tope);
-			$stmt->execute();
-			$result = $stmt->get_result();
+		/** Crear una tabla que no devuelve un conjunto de resultados */
+		if ( $result = $link->query("SELECT * FROM productos WHERE unidades <= $tope") ) 
+		{
 			$productos = $result->fetch_all(MYSQLI_ASSOC);
-			// Cerrar el statement para liberar recursos
-			$stmt->close();
+			/** útil para liberar memoria asociada a un resultado con demasiada información */
+			$result->free();
 		}
-	
+
 		$link->close();
 	}
 	?>
@@ -36,7 +34,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Productos por unidades</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	
+        <!--
 		<script>
         function show(event) {
             // Obtener el id de la fila donde está el botón presionado
@@ -119,7 +117,7 @@
             form.submit();
         }
     </script>
-	
+            -->
 	</head>
 	<body>
 		<h3>PRODUCTOS</h3>
@@ -154,7 +152,8 @@
 							<td><?= utf8_encode($producto['detalles']) ?></td>
 							<td><img src="<?= $producto['imagen'] ?>" alt="Producto" /></td>
                         	<td>
-                            <input type="button" value="Modificar" onclick="show(event)" />
+                                <a href = "formulario_productos_v2.php?id=<?= $producto ['id'] ?>" class="btn btn-primary">Modificar</a>
+                            <!--<input type="button" value="Modificar" onclick="show(event)" />-->
                         	</td>
                     </tr>
 					<?php endforeach; ?>
