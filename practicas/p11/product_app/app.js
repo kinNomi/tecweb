@@ -18,7 +18,7 @@ function buscarID(e) {
     e.preventDefault();
 
     // SE OBTIENE EL ID A BUSCAR
-    var id = document.getElementById('search').value;
+    var busqueda = document.getElementById('search').value;
 
     // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
     var client = getXMLHttpRequest();
@@ -31,7 +31,7 @@ function buscarID(e) {
             
             // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
             let productos = JSON.parse(client.responseText);    // similar a eval('('+client.responseText+')');
-            
+            console.log(productos);
             // SE VERIFICA SI EL OBJETO JSON TIENE DATOS
             if(Object.keys(productos).length > 0) {
                 // SE CREA UNA LISTA HTML CON LA DESCRIPCIÓN DEL PRODUCTO
@@ -57,7 +57,7 @@ function buscarID(e) {
             }
         }
     };
-    client.send("id="+id);
+    client.send("busqueda="+busqueda);
 }
 
 // FUNCIÓN CALLBACK DE BOTÓN "Agregar Producto"
@@ -70,6 +70,12 @@ function agregarProducto(e) {
     var finalJSON = JSON.parse(productoJsonString);
     // SE AGREGA AL JSON EL NOMBRE DEL PRODUCTO
     finalJSON['nombre'] = document.getElementById('name').value;
+
+     // SE OBTIENE EL STRING DEL JSON FINAL
+
+     if(nombre(finalJSON['nombre']) || marca(finalJSON['marca']) || modelo(finalJSON['modelo']) || precio(finalJSON['precio']) || detalles(finalJSON['detalles']) || unidades(finalJSON['unidades'])){
+        return;
+    }
     // SE OBTIENE EL STRING DEL JSON FINAL
     productoJsonString = JSON.stringify(finalJSON,null,2);
 
@@ -144,7 +150,7 @@ function buscarProducto(e) {
             //SE VERIFA SI EL JSON TIENE DATOS
             if (Object.keys(productos).length > 0) {
                 if (productos["error"] == 'Sin resultados') {
-                    alert("No se enocntraron productos")
+                    alert("No se encontraron productos")
                     
                 }else{
                     let contenido = '';
@@ -180,4 +186,113 @@ function buscarProducto(e) {
     }
     //SE ENVIA LA PETICION AL SEVIDOR
     client.send("busqueda="+busqueda);
+}
+
+
+function Escuchar() {
+    if (this.readyState == 4 && this.status == 200) {
+        //console.log('[CLIENTE]\n'+client.responseText);
+        
+        // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
+        let productos = JSON.parse(client.responseText);    // similar a eval('('+client.responseText+')');
+        
+        //SE VERIFA SI EL JSON TIENE DATOS
+        if (Object.keys(productos).length > 0) {
+            if (productos["error"] == 'Sin resultados') {
+                alert("No se encontraron productos")
+                
+            }else{
+                let i = 0;
+                let descripcion = '';
+                let template = '';
+                while(productos[i] != undefined)
+                {
+                    descripcion = '';
+                    descripcion =+ '<li>Precio: ' + productos[i].precio + '</li>';
+                    descripcion =+ '<li>Unidades: ' + productos[i].unidades + '</li>';
+                    descripcion =+ '<li>Modelo: ' + productos[i].modelo + '</li>';
+                    descripcion =+ '<li>Marca: ' + productos[i].marca + '</li>';
+                    descripcion =+ '<li>Detalles: ' + productos[i].detalles + '</li>';
+                
+                    template += `
+                        <tr>
+                            <td>${productos[i].id}</td>
+                            <td>${productos[i].nombre}</td>
+                            <td><ul>${descripcion}</ul></td>
+                        </tr>
+                    `;
+
+                    i++;
+                }
+            }
+            
+            //se inserta 
+            document.getElementById("productos").innerHTML = template;
+        }
+    }
+     
+}
+
+function nombre(nom){
+
+    if(nom.length > 100 || nom.length==0){
+
+        alert("El nombre debe tener de 1 a 100 caracteres")
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function marca(mar){
+    let marcas = {
+        "Audi":1,
+        "Toyota":2,
+        "Ford":3,
+        "VW":4
+    };
+    if(marcas[mar] == undefined){
+        alert("La marca debe ser valida");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function modelo(model){
+    let regex = /^[a-zA-Z0-9]{1,25}$/; // Expresión regular
+    if(model.length > 25 || regex.test(model) == false){
+        alert("El modelo debe de ser de menos de 25 caracteres y tener caracteres validos");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function precio(precio){
+    if(Number(precio) < 99.99){
+        alert("El precio debe ser mayor a 99.99");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function detalles(detalles){
+    if(detalles!= ""){
+        if(detalles.length > 255){
+            alert("Los detalles tienen un maximo de 255 caracteres");
+            return true;
+        }
+    }
+    return false;
+}
+
+function unidades(unidades){
+    if(Number(unidades) < 0){
+        alert("El numero de unidades del producto debe ser igual o mayor a cero");
+        return true;
+    }else{
+        return false;
+    }
 }
