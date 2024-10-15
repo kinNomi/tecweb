@@ -52,7 +52,7 @@
 	?>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<title>Productos por unidades</title>
+		<title>Productos Vigentes</title>
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	
 		<!--
@@ -170,7 +170,7 @@
 							<td><?= $producto['modelo'] ?></td>
 							<td><?= $producto['precio'] ?></td>
 							<td><?= $producto['unidades'] ?></td>
-							<td><?= utf8_encode($producto['detalles']) ?></td>
+							<td><?= ($producto['detalles']) ?></td>
 							<td><img src="<?= $producto['imagen'] ?>" alt="Producto" /></td>
 							<td>
 								<a href = "formulario_productos_v3.php?id=<?= $producto ['id'] ?>" class="btn btn-primary">Modificar</a>
