@@ -149,7 +149,7 @@
 							<td><?= $producto['modelo'] ?></td>
 							<td><?= $producto['precio'] ?></td>
 							<td><?= $producto['unidades'] ?></td>
-							<td><?= utf8_encode($producto['detalles']) ?></td>
+							<td><?= ($producto['detalles']) ?></td>
 							<td><img src="<?= $producto['imagen'] ?>" alt="Producto" /></td>
                         	<td>
                                 <a href = "formulario_productos_v3.php?id=<?= $producto ['id'] ?>" class="btn btn-primary">Modificar</a>
