@@ -127,50 +127,57 @@ function buscarProducto(e) {
 
     // SE OBTIENE LA BÚSQUEDA
     var busqueda = document.getElementById('search').value;
+    let client = getXMLHttpRequest();
 
     // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
-    var client = getXMLHttpRequest();
+    //var client = getXMLHttpRequest();
     client.open('POST', './backend/read.php', true);
     client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     client.onreadystatechange = function () {
         // SE VERIFICA SI LA RESPUESTA ESTÁ LISTA Y FUE SATISFACTORIA
         if (client.readyState == 4 && client.status == 200) {
-            console.log('[CLIENTE]\n'+client.responseText);
+            //console.log('[CLIENTE]\n'+client.responseText);
             
             // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
             let productos = JSON.parse(client.responseText);    // similar a eval('('+client.responseText+')');
             
             //SE VERIFA SI EL JSON TIENE DATOS
-            if (productos.length > 0) {
-                let template = '';
+            if (Object.keys(productos).length > 0) {
+                if (productos["error"] == 'Sin resultados') {
+                    alert("No se enocntraron productos")
+                    
+                }else{
+                    let contenido = '';
+                        //let template = '';
 
-                //SE MUESTRAN LOS DATOS
-                productos.forEach(producto => {
-                    let descripcion = '';
-                    descripcion =+ '<li>Precio: ' + producto.precio + '</li>';
-                    descripcion =+ '<li>Unidades: ' + producto.unidades + '</li>';
-                    descripcion =+ '<li>Modelo: ' + producto.modelo + '</li>';
-                    descripcion =+ '<li>Marca: ' + producto.marca + '</li>';
-                    descripcion =+ '<li>Detalles: ' + producto.detalles + '</li>';
+                        //SE MUESTRAN LOS DATOS
+                    productos.forEach(producto => {
+                            let descripcion = `
+                            descripcion =+ '<li>Precio: ' + producto.precio + '</li>';
+                            descripcion =+ '<li>Unidades: ' + producto.unidades + '</li>';
+                            descripcion =+ '<li>Modelo: ' + producto.modelo + '</li>';
+                            descripcion =+ '<li>Marca: ' + producto.marca + '</li>';
+                            descripcion =+ '<li>Detalles: ' + producto.detalles + '</li>';
+                        `;
 
-                    template += `
-                        <tr>
-                            <td>${producto.id}</td>
-                            <td>${producto.nombre}</td>
-                            <td><ul>${descripcion}</ul></td>
-                        </tr>
-                    `;
+                        contenido += `
+                            <tr>
+                                <td>${producto.id}</td>
+                                <td>${producto.nombre}</td>
+                                <td><ul>${descripcion}</ul></td>
+                            </tr>
+                        `;
 
-                });
-          
-                // SE INSERTA LA PLANTILLA EN EL ELEMENTO CON ID "productos"
-                document.getElementById("productos").innerHTML = template;
-            } else{
+                    });
+            
+                    // SE INSERTA LA PLANTILLA EN EL ELEMENTO CON ID "productos"
+                    document.getElementById("productos").innerHTML = contenido;
+                } //else{
                 //SI NO HAY, SE LIMPIA LA TABLA
-                document.getElementById("productos").innerHTML = '<tr><td colspan = "3">Sin resultados</td></tr>';
+                //document.getElementById("productos").innerHTML = '<tr><td colspan = "3">Sin resultados</td></tr>';
             }
         }
-    };
+    }
     //SE ENVIA LA PETICION AL SEVIDOR
     client.send("busqueda="+busqueda);
 }

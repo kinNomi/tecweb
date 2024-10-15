@@ -5,7 +5,7 @@
     $data = array();
     // SE VERIFICA HABER RECIBIDO LA BUSQUEDA
     if( isset($_POST['busqueda']) ) {
-        $busqueda = $conexion->real_escape_string($POST['busqueda']); //evitar inyeccion sql
+        $busqueda = $conexion->real_escape_string($_POST['busqueda']); //evitar inyeccion sql
         //$id = $_POST['id'];
         // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
         //if ( $result = $conexion->query("SELECT * FROM productos WHERE id = '{$id}'") ) {
