@@ -1,34 +1,34 @@
 <?php
     include_once __DIR__.'/database.php';
 
-    $response = array('status' => 'error', 'message' => '', 'data' => array());
-
-    if(isset($_POST['busqueda'])) {
-        $busqueda = $conexion->real_escape_string($_POST['busqueda']);
-        
-        $query = "SELECT * FROM `productos` WHERE nombre LIKE '%{$busqueda}%' OR marca LIKE '%{$busqueda}%' OR detalles LIKE '%{$busqueda}%'";
+    // SE CREA EL ARREGLO QUE SE VA A DEVOLVER EN FORMA DE JSON
+    $data = array();
+    // SE VERIFICA HABER RECIBIDO EL TÉRMINO DE BÚSQUEDA
+    if(isset($_POST['search'])) {
+        $search = $_POST['search'];
+        // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
+        $query = "SELECT * FROM productos WHERE 
+                  nombre LIKE '%{$search}%' OR 
+                  marca LIKE '%{$search}%' OR 
+                  detalles LIKE '%{$search}%'";
         
         if ($result = $conexion->query($query)) {
-            while ($row = $result->fetch_assoc()) {
-                $response['data'][] = $row;
+            // SE OBTIENEN LOS RESULTADOS
+            while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+                $product = array();
+                // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
+                foreach($row as $key => $value) {
+                    $product[$key] = utf8_encode($value);
+                }
+                $data[] = $product;
             }
-            
-            if (empty($response['data'])) {
-                $response['message'] = 'Sin resultados';
-            } else {
-                $response['status'] = 'success';
-                $response['message'] = 'Productos encontrados';
-            }
-            
             $result->free();
         } else {
-            $response['message'] = 'Error en la consulta: ' . $conexion->error;
+            die('Query Error: '.mysqli_error($conexion));
         }
-        
         $conexion->close();
-    } else {
-        $response['message'] = 'No se recibió término de búsqueda';
-    }
+    } 
     
-    echo json_encode($response);
+    // SE HACE LA CONVERSIÓN DE ARRAY A JSON
+    echo json_encode($data, JSON_PRETTY_PRINT);
 ?>
