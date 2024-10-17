@@ -7,11 +7,48 @@
         // SE TRANSFORMA EL STRING DEL JASON A OBJETO
         $jsonOBJ = json_decode($producto);
         
-        $response = array('status' => 'error', 'message' => '');
+        //SE VALIDA SI EL PRODUCTO YA EXISTE
+        $nombre = $jsonOBJ->nombre;
+        $checkQuery = "SELECT * FROM productos WHERE nombre = '$nombre' AND eliminado = 0";
+        $result = $conexion->query($checkQuery);
 
-        if ( $result = $conexion->query("SELECT * FROM productos WHERE nombre='{$jsonOBJ->nombre}' and marca='{$jsonOBJ->marca}' and modelo='{$jsonOBJ->modelo}';") ) 
+        if ($result -> num_rows > 0 ) 
 		{
-            /** Se extraen las tuplas obtenidas de la consulta */
+            echo "ERROR: Porducto existente";
+        }else {
+            //SE INSERTA AL QUERY
+            $query = "INSERT INTO productos(nombre, marca, modelo, precio, detalles, unidades, imagen)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            //DECLARACION
+            $stmt = $conexion->prepare($query);
+
+            //PARAMENTROS
+            $stmt->bind_param("sssdsds",
+                $jsonOBJ->nombre,
+                $jsonOBJ->marca,
+                $jsonOBJ->modelo,
+                $jsonOBJ->precio,
+                $jsonOBJ->detalles,
+                $jsonOBJ->unidades,
+                $jsonOBJ->imagen
+            );
+
+            if ($stmt -> execute()) {
+                echo "Producto agregado"; 
+            }else {
+                echo "ERROR: no se pudo agregar el producto ". $stmt->error;
+            }
+
+            $stmt->close();
+        }
+
+        $conexion->close();
+    }else {
+        echo "ERROR: No se recibieron datos";
+    }
+    /*
+            //Se extraen las tuplas obtenidas de la consulta 
 			if($result->num_rows > 0){
                 $response['message'] = "ERROR: El producto ya está registrado";
             } else {
@@ -29,4 +66,5 @@
 		} 
         echo json_encode($response);
     }
+    */
 ?>
