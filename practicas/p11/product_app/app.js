@@ -131,7 +131,7 @@ function buscarProducto(e) {
     e.preventDefault();
 
     // SE OBTIENE LA BÚSQUEDA
-    var busqueda = document.getElementById('search').value;
+    var busqueda = document.getElementById('busqueda').value;
     let client = getXMLHttpRequest();
 
     // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
@@ -141,7 +141,42 @@ function buscarProducto(e) {
     client.onreadystatechange = function () {
         // SE VERIFICA SI LA RESPUESTA ESTÁ LISTA Y FUE SATISFACTORIA
         if (client.readyState == 4 && client.status == 200) {
-            //console.log('[CLIENTE]\n'+client.responseText);
+            console.log('[CLIENTE]\n'+client.responseText);
+
+            //SE OBTIENE EL ARREGLO DEL LOS PRODUCTOS
+            let productos = JSON.parse(client.responseText);
+            
+            //SE VERIFICA SI EL ARREGLO TIENE DATOS
+            if (productos.length > 0) {
+                //SE CREA UNA PLANTILLA PARA INSERTAR EN HTML
+                let template = '';
+                productos.forEach(producto => {
+                    let descripcion = '';
+                    descripcion += '<li>Precio: '+producto.precio+'</li>';
+                    descripcion += '<li>Unidades: '+producto.unidades+'</li>';
+                    descripcion += '<li>Modelo: '+producto.modelo+'</li>';
+                    descripcion += '<li>Marca: '+producto.marca+'</li>';
+                    descripcion += '<li>Detalles: '+producto.detalles+'</li>';
+
+                    template += `
+                        <tr>
+                            <td>${producto.id}</td>
+                            <td>${producto.nombre}</td>
+                            <td>${descripcion}</td>
+                        </tr>
+                    ;`
+                });
+
+                //SE INSERTA LA PLANTILLA
+                document.getElementById("productos").innerHTML = template;
+            }else{
+                document.getElementById("productos").innerHTML = '<tr><td colspan = "3">No se encontraron productos</td></tr>';
+            }
+        }
+    };
+    client.send("busqueda"+busqueda);
+}
+    /*
             
             // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
             let productos = JSON.parse(client.responseText);    // similar a eval('('+client.responseText+')');
@@ -186,7 +221,7 @@ function buscarProducto(e) {
     //SE ENVIA LA PETICION AL SEVIDOR
     client.send("busqueda="+busqueda);
 }
-
+*/
 /*
 function Escuchar() {
     if (this.readyState == 4 && this.status == 200) {

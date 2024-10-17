@@ -4,13 +4,13 @@
     // SE CREA EL ARREGLO QUE SE VA A DEVOLVER EN FORMA DE JSON
     $data = array();
     // SE VERIFICA HABER RECIBIDO EL TÉRMINO DE BÚSQUEDA
-    if(isset($_POST['search'])) {
-        $search = $_POST['search'];
+    if(isset($_POST['busqueda'])) {
+        $busqueda = $_POST['busqueda'];
         // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
         $query = "SELECT * FROM productos WHERE 
-                  nombre LIKE '%{$search}%' OR 
-                  marca LIKE '%{$search}%' OR 
-                  detalles LIKE '%{$search}%'";
+                  nombre LIKE '%{$busqueda}%' OR 
+                  marca LIKE '%{$busqueda}%' OR 
+                  detalles LIKE '%{$busqueda}%'";
         
         if ($result = $conexion->query($query)) {
             // SE OBTIENEN LOS RESULTADOS
