@@ -78,15 +78,15 @@ function agregarProducto(e) {
     client.setRequestHeader('Content-Type', "application/json;charset=UTF-8");
     client.onreadystatechange = function () {
         if (client.readyState == 4 && client.status == 200) {
-            var response = JSON.parse(client.responseText);
-            if(response.status === 'success') {
-                alert(response.message);
-// Actualizar la tabla de productos
+            console.log(client.responseText);
+            //var response = JSON.parse(client.responseText);
+            //if(response.status === 'success') {
+            alert(client.responseText);
+            // Actualizar la tabla de productos
                 //buscarProducto(new Event('submit'));
-          } else {
-                alert(response.message);
-            }
-        }
+        } //else {
+            //    alert(response.message);
+            //}
     };
     client.send(productoJsonString);
 }
