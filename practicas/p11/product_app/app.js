@@ -150,7 +150,7 @@ function buscarProducto(e) {
             //SE VERIFA SI EL JSON TIENE DATOS
             if (Object.keys(productos).length > 0) {
                 if (productos["error"] == 'Sin resultados') {
-                    alert("No se encontraron productos")
+                    alert("No se encontraron productos");
                     
                 }else{
                     let contenido = '';
@@ -160,7 +160,7 @@ function buscarProducto(e) {
                     productos.forEach(producto => {
                             let descripcion = `
                                 <li>Precio: ${producto.precio}</li>
-                                <li>Unindades: ${producto.unidades}</li>
+                                <li>Unidades: ${producto.unidades}</li>
                                 <li>Modelo: ${producto.modelo}</li>
                                 <li>Marca: ${producto.marca}</li>
                                 <li>Detalles: ${producto.detalles}</li>
@@ -188,7 +188,7 @@ function buscarProducto(e) {
     client.send("busqueda="+busqueda);
 }
 
-
+/*
 function Escuchar() {
     if (this.readyState == 4 && this.status == 200) {
         //console.log('[CLIENTE]\n'+client.responseText);
@@ -232,7 +232,7 @@ function Escuchar() {
     }
      
 }
-
+*/
 function nombre(nom){
 
     if(nom.length > 100 || nom.length==0){
