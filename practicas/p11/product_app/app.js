@@ -36,11 +36,11 @@ function buscarID(e) {
             if(Object.keys(productos).length > 0) {
                 // SE CREA UNA LISTA HTML CON LA DESCRIPCIÓN DEL PRODUCTO
                 let descripcion = '';
-                    descripcion += '<li>precio: '+productos.precio+'</li>';
-                    descripcion += '<li>unidades: '+productos.unidades+'</li>';
-                    descripcion += '<li>modelo: '+productos.modelo+'</li>';
-                    descripcion += '<li>marca: '+productos.marca+'</li>';
-                    descripcion += '<li>detalles: '+productos.detalles+'</li>';
+                    descripcion += '<li>Precio: '+productos.precio+'</li>';
+                    descripcion += '<li>Unidades: '+productos.unidades+'</li>';
+                    descripcion += '<li>Modelo: '+productos.modelo+'</li>';
+                    descripcion += '<li>Marca: '+productos.marca+'</li>';
+                    descripcion += '<li>Detalles: '+productos.detalles+'</li>';
                 
                 // SE CREA UNA PLANTILLA PARA CREAR LA(S) FILA(S) A INSERTAR EN EL DOCUMENTO HTML
                 let template = '';
@@ -159,12 +159,12 @@ function buscarProducto(e) {
                         //SE MUESTRAN LOS DATOS
                     productos.forEach(producto => {
                             let descripcion = `
-                            descripcion =+ '<li>Precio: ' + producto.precio + '</li>';
-                            descripcion =+ '<li>Unidades: ' + producto.unidades + '</li>';
-                            descripcion =+ '<li>Modelo: ' + producto.modelo + '</li>';
-                            descripcion =+ '<li>Marca: ' + producto.marca + '</li>';
-                            descripcion =+ '<li>Detalles: ' + producto.detalles + '</li>';
-                        `;
+                                <li>Precio: ${producto.precio}</li>
+                                <li>Unindades: ${producto.unidades}</li>
+                                <li>Modelo: ${producto.modelo}</li>
+                                <li>Marca: ${producto.marca}</li>
+                                <li>Detalles: ${producto.detalles}</li>
+                            `;
 
                         contenido += `
                             <tr>
@@ -194,7 +194,7 @@ function Escuchar() {
         //console.log('[CLIENTE]\n'+client.responseText);
         
         // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
-        let productos = JSON.parse(client.responseText);    // similar a eval('('+client.responseText+')');
+        let productos = JSON.parse(this.responseText);    // similar a eval('('+client.responseText+')');
         
         //SE VERIFA SI EL JSON TIENE DATOS
         if (Object.keys(productos).length > 0) {
@@ -237,7 +237,7 @@ function nombre(nom){
 
     if(nom.length > 100 || nom.length==0){
 
-        alert("El nombre debe tener de 1 a 100 caracteres")
+        alert("El nombre debe tener menos de 100 caracteres")
         return true;
     }else{
         return false;
@@ -252,7 +252,7 @@ function marca(mar){
         "VW":4
     };
     if(marcas[mar] == undefined){
-        alert("La marca debe ser valida");
+        alert("La marca debe ser válida");
         return true;
     }else{
         return false;
@@ -262,7 +262,7 @@ function marca(mar){
 function modelo(model){
     let regex = /^[a-zA-Z0-9]{1,25}$/; // Expresión regular
     if(model.length > 25 || regex.test(model) == false){
-        alert("El modelo debe de ser de menos de 25 caracteres y tener caracteres validos");
+        alert("El modelo debe de ser de menos de 25 caracteres y caracteres válidos");
         return true;
     }else{
         return false;
@@ -281,7 +281,7 @@ function precio(precio){
 function detalles(detalles){
     if(detalles!= ""){
         if(detalles.length > 255){
-            alert("Los detalles tienen un maximo de 255 caracteres");
+            alert("Los detalles deben tener menos de 255 caracteres");
             return true;
         }
     }
@@ -290,7 +290,7 @@ function detalles(detalles){
 
 function unidades(unidades){
     if(Number(unidades) < 0){
-        alert("El numero de unidades del producto debe ser igual o mayor a cero");
+        alert("Las unidades del producto debe ser igual o mayor a cero");
         return true;
     }else{
         return false;
