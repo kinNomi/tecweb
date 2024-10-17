@@ -81,8 +81,9 @@ function agregarProducto(e) {
             var response = JSON.parse(client.responseText);
             if(response.status === 'success') {
                 alert(response.message);
-                // Aquí puedes agregar código para actualizar la tabla de productos
-            } else {
+// Actualizar la tabla de productos
+                buscarProducto(new Event('submit'));
+          } else {
                 alert(response.message);
             }
         }
