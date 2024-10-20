@@ -12,10 +12,6 @@
       
         <ul></ul>
         <form>
-          <!--
-          <input name="search" id="search" type="search" placeholder="ID">
-          <button type="submit" onclick="buscarID(event)">Buscar</button>
-          -->
           <input name="search" id="search" type="search" placeholder="Buscar producto">
           <button type="submit" onclick="buscarProducto(event)">Buscar</button>
         </form>
@@ -26,7 +22,7 @@
         <!-- FORMULARIO PARA AGREGAR PRODUCTO -->
         <form id="task-form">
           <div>
-            <input type="text" id="name" placeholder="Nombre de producto">
+            <input type="text" id="name" placeholder="Nombre de nuevo producto">
           </div>
           <div>
             <textarea id="description" cols="30" rows="10" placeholder="JSON de producto"></textarea>
@@ -45,9 +41,9 @@
         <table>
           <thead>
             <tr>
-              <td>Id</td>
-              <td>Nombre</td>
-              <td>Descripcion</td>
+              <td>Id&emsp;</td>
+              <td>Nombre&emsp;&emsp;</td>
+              <td>Descripción</td>
             </tr>
           </thead>
           <tbody id="productos"></tbody>
