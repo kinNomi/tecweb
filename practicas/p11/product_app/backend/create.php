@@ -6,13 +6,27 @@
     if(!empty($producto)) {
         // SE TRANSFORMA EL STRING DEL JASON A OBJETO
         $jsonOBJ = json_decode($producto);
-        /**
-         * SUSTITUYE LA SIGUIENTE LÍNEA POR EL CÓDIGO QUE REALICE
-         * LA INSERCIÓN A LA BASE DE DATOS. COMO RESPUESTA REGRESA
-         * UN MENSAJE DE ÉXITO O DE ERROR, SEGÚN SEA EL CASO.
-         */
-        echo '[SERVIDOR] Nombre: '.$jsonOBJ->nombre;
+        
+        if ($result = $conexion->query("SELECT * FROM productos WHERE nombre = '{$jsonOBJ->nombre}' and eliminado = 0")) {
+            if($result->num_rows > 0) {
+                echo '[SERVIDOR] Error: Producto ya registrado';
+            } else {
+                $sql = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen) VALUES ('{$jsonOBJ->nombre}', '{$jsonOBJ->marca}', '{$jsonOBJ->modelo}', '{$jsonOBJ->precio}', '{$jsonOBJ->detalles}', '{$jsonOBJ->unidades}', '{$jsonOBJ->imagen}')";
+                if($conexion->query($sql)) {
+                    echo '[SERVIDOR] Éxito: Producto creado';
+                }else{
+                    echo '[SERVIDOR] Error: No se pudo crear el producto';
+                }
+            }
 
+        }else{
+            echo '[SERVIDOR] Error: No se pudo verificar el producto';
+        }
+    }else {
+        echo '[SERVIDOR] Error: No se recibieron datos del producto';
+    }
+    $conexion->close();
+/*
         if ($result = $conexion->query("SELECT * FROM productos WHERE nombre = '{$jsonOBJ->nombre}' and eliminado = 0")) {
             if($result->num_rows > 0) {
                 echo '[SERVIDOR] Error: Producto ya registrado';
@@ -34,4 +48,5 @@
         } 
         
     }
+*/
 ?>
