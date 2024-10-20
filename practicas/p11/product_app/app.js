@@ -120,3 +120,73 @@ function init() {
     var JsonString = JSON.stringify(baseJSON,null,2);
     document.getElementById("description").value = JsonString;
 }
+
+// FUNCIÓN PARA BUSCAR PRODUCTO
+function buscarProducto(e) {
+    e.preventDefault();
+}
+
+//VALIDACIONES
+function nombre(nom){
+
+    if(nom.length > 100 || nom.length==0){
+
+        alert("El nombre debe tener menos de 100 caracteres")
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function marca(mar){
+    let marcas = {
+        "Audi":1,
+        "Toyota":2,
+        "Ford":3,
+        "VW":4
+    };
+    if(marcas[mar] == undefined){
+        alert("La marca debe ser válida");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function modelo(model){
+    let regex = /^[a-zA-Z0-9]{1,25}$/; // Expresión regular
+    if(model.length > 25 || regex.test(model) == false){
+        alert("El modelo debe de ser de menos de 25 caracteres y caracteres válidos");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function precio(precio){
+    if(Number(precio) < 99.99){
+        alert("El precio debe ser mayor a 99.99");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function detalles(detalles){
+    if(detalles!= ""){
+        if(detalles.length > 255){
+            alert("Los detalles deben tener menos de 255 caracteres");
+            return true;
+        }
+    }
+    return false;
+}
+
+function unidades(unidades){
+    if(Number(unidades) < 0){
+        alert("Las unidades del producto debe ser igual o mayor a cero");
+        return true;
+    }else{
+        return false;
+    }
+}
