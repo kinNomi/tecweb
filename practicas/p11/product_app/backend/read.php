@@ -15,12 +15,16 @@
         if ($result = $conexion->query($query)) {
             // SE OBTIENEN LOS RESULTADOS
             while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-                $product = array();
+                $producto = array();
                 // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
                 foreach($row as $key => $value) {
-                    $product[$key] = utf8_encode($value);
+                    $producto[$key] = ($value);
                 }
-                $data[] = $product;
+                $data[] = $producto;
+            }
+
+            if (empty($data)) {
+                $data['error'] = 'Sin resultados';
             }
             $result->free();
         } else {
