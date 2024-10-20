@@ -141,11 +141,11 @@ function buscarProducto(e) {
 
                     productos.forEach(producto => {
                         let descripcion = `
-                            <li>precio: ${producto.precio}</li>
-                            <li>unidades: ${producto.unidades}</li>
-                            <li>modelo: ${producto.modelo}</li>
-                            <li>marca: ${producto.marca}</li>
-                            <li>detalles: ${producto.detalles}</li>
+                            <li>Precio: ${producto.precio}</li>
+                            <li>Unidades: ${producto.unidades}</li>
+                            <li>Modelo: ${producto.modelo}</li>
+                            <li>Marca: ${producto.marca}</li>
+                            <li>Detalles: ${producto.detalles}</li>
                         `;
 
                         contenido += `
