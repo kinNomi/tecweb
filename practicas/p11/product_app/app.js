@@ -122,13 +122,12 @@ function init() {
 }
 
 
-// FUNCIÓN CALLBACK DE BOTÓN "Buscar"
+// FUNCIÓN CALLBACK DE BOTÓN "Buscar Producto"
 function buscarProducto(e) {
-   
     e.preventDefault();
 
-    // SE OBTIENE EL ID A BUSCAR
-    var id = document.getElementById('search').value;
+    // SE OBTIENE EL TÉRMINO DE BÚSQUEDA
+    var busqueda = document.getElementById('search').value;
 
     // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
     var client = getXMLHttpRequest();
@@ -139,35 +138,39 @@ function buscarProducto(e) {
         if (client.readyState == 4 && client.status == 200) {
             console.log('[CLIENTE]\n'+client.responseText);
             
-            // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
-            let productos = JSON.parse(client.responseText);    // similar a eval('('+client.responseText+')');
+            // SE OBTIENE EL ARRAY DE PRODUCTOS A PARTIR DE UN STRING JSON
+            let productos = JSON.parse(client.responseText);
             
-            // SE VERIFICA SI EL OBJETO JSON TIENE DATOS
-            if(Object.keys(productos).length > 0) {
-                // SE CREA UNA LISTA HTML CON LA DESCRIPCIÓN DEL PRODUCTO
-                let descripcion = '';
-                    descripcion += '<li>precio: '+productos.precio+'</li>';
-                    descripcion += '<li>unidades: '+productos.unidades+'</li>';
-                    descripcion += '<li>modelo: '+productos.modelo+'</li>';
-                    descripcion += '<li>marca: '+productos.marca+'</li>';
-                    descripcion += '<li>detalles: '+productos.detalles+'</li>';
-                
+            // SE VERIFICA SI EL ARRAY JSON TIENE DATOS
+            if(productos.length > 0) {
                 // SE CREA UNA PLANTILLA PARA CREAR LA(S) FILA(S) A INSERTAR EN EL DOCUMENTO HTML
                 let template = '';
+                
+                productos.forEach(producto => {
+                    let descripcion = '';
+                    descripcion += '<li>precio: '+producto.precio+'</li>';
+                    descripcion += '<li>unidades: '+producto.unidades+'</li>';
+                    descripcion += '<li>modelo: '+producto.modelo+'</li>';
+                    descripcion += '<li>marca: '+producto.marca+'</li>';
+                    descripcion += '<li>detalles: '+producto.detalles+'</li>';
+                    
                     template += `
                         <tr>
-                            <td>${productos.id}</td>
-                            <td>${productos.nombre}</td>
+                            <td>${producto.id}</td>
+                            <td>${producto.nombre}</td>
                             <td><ul>${descripcion}</ul></td>
                         </tr>
                     `;
+                });
 
                 // SE INSERTA LA PLANTILLA EN EL ELEMENTO CON ID "productos"
                 document.getElementById("productos").innerHTML = template;
+            } else {
+                alert("No se encontraron productos");
             }
         }
     };
-    client.send("id="+id);
+    client.send("busqueda="+busqueda);
 }
 //FUNCIONES DE VALIDACIÓN
 function nombre(nom){
