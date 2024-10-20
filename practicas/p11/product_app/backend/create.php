@@ -12,5 +12,26 @@
          * UN MENSAJE DE ÉXITO O DE ERROR, SEGÚN SEA EL CASO.
          */
         echo '[SERVIDOR] Nombre: '.$jsonOBJ->nombre;
+
+        if ($result = $conexion->query("SELECT * FROM productos WHERE nombre = '{$jsonOBJ->nombre}' and eliminado = 0")) {
+            if($result->num_rows > 0) {
+                echo '[SERVIDOR] Error: Producto ya registrado';
+            } else {
+                $sql = "INSERT INTO productos (nombre, marca, modelo, precio, detalles, unidades, imagen) VALUES ('{$jsonOBJ->nombre}', '{$jsonOBJ->marca}', '{$jsonOBJ->modelo}', '{$jsonOBJ->precio}', '{$jsonOBJ->detalles}', '{$jsonOBJ->unidades}', '{$jsonOBJ->imagen}')";
+                if($conexion->query($sql)) {
+                    echo '[SERVIDOR] Éxito: Producto creado';
+                    echo '<H3>DATOS PRODUCTO: </H3> ';
+                    echo '<P>Nombre: '.$jsonOBJ->nombre.'</P>';
+                    echo '<P>Marca: '.$jsonOBJ->marca.'</P>';
+                    echo '<P>Modelo: '.$jsonOBJ->modelo.'</P>';
+                    echo '<P>Precio: '.$jsonOBJ->precio.'</P>';
+                    echo '<P>Detalles: '.$jsonOBJ->detalles.'</P>';
+                    echo '<P>Unidades: '.$jsonOBJ->unidades.'</P>';
+                } else {
+                    echo '[SERVIDOR] Error: No se pudo crear el producto';
+                }
+            }
+        } 
+        
     }
 ?>
