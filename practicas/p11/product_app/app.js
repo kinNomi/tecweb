@@ -83,7 +83,7 @@ function agregarProducto(e) {
             //if(response.status === 'success') {
             alert(client.responseText);
             // Actualizar la tabla de productos
-                //buscarProducto(new Event('submit'));
+            buscarProducto(new Event('submit'));
         } //else {
             //    alert(response.message);
             //}
