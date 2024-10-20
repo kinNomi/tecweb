@@ -18,9 +18,13 @@
                 $producto = array();
                 // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
                 foreach($row as $key => $value) {
-                    $producto[$key] = utf8_encode($value);
+                    $producto[$key] = $value;
                 }
                 $data[] = $producto;
+            }
+
+            if (empty($data)) {
+                $data['error'] = 'Sin resultados';
             }
             $result->free();
         } else {
