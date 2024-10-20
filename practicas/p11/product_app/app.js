@@ -142,34 +142,39 @@ function buscarProducto(e) {
             let productos = JSON.parse(client.responseText);
             
             // SE VERIFICA SI EL ARRAY JSON TIENE DATOS
-            if(productos.length > 0) {
-                // SE CREA UNA PLANTILLA PARA CREAR LA(S) FILA(S) A INSERTAR EN EL DOCUMENTO HTML
-                let template = '';
-                
-                productos.forEach(producto => {
-                    let descripcion = '';
-                    descripcion += '<li>precio: '+producto.precio+'</li>';
-                    descripcion += '<li>unidades: '+producto.unidades+'</li>';
-                    descripcion += '<li>modelo: '+producto.modelo+'</li>';
-                    descripcion += '<li>marca: '+producto.marca+'</li>';
-                    descripcion += '<li>detalles: '+producto.detalles+'</li>';
-                    
-                    template += `
-                        <tr>
-                            <td>${producto.id}</td>
-                            <td>${producto.nombre}</td>
-                            <td><ul>${descripcion}</ul></td>
-                        </tr>
-                    `;
-                });
+            if(Object.keys(productos).length > 0) {
 
-                // SE INSERTA LA PLANTILLA EN EL ELEMENTO CON ID "productos"
-                document.getElementById("productos").innerHTML = template;
-            } else {
-                alert("No se encontraron productos");
+                if(productos['error'] == 'Sin resultados') {
+                    alert("No se encontraron productos");
+                } else {
+                    // SE CREA UNA PLANTILLA PARA CREAR LA(S) FILA(S) A INSERTAR EN EL DOCUMENTO HTML
+                    let template = '';
+                    
+                    productos.forEach(producto => {
+                        let descripcion = `
+                            <li>precio: ${producto.precio}</li>
+                            <li>unidades: ${producto.unidades}</li>
+                            <li>modelo: ${producto.modelo}</li>
+                            <li>marca: ${producto.marca}</li>
+                            <li>detalles: ${producto.detalles}</li>
+                        `;
+                        
+                        template += `
+                            <tr>
+                                <td>${producto.id}</td>
+                                <td>${producto.nombre}</td>
+                                <td><ul>${descripcion}</ul></td>
+                            </tr>
+                        `;
+                    });
+
+                    // SE INSERTA LA PLANTILLA EN EL ELEMENTO CON ID "productos"
+                    document.getElementById("productos").innerHTML = template;
+
+                }
             }
         }
-    };
+    }
     client.send("busqueda="+busqueda);
 }
 //FUNCIONES DE VALIDACIÓN
