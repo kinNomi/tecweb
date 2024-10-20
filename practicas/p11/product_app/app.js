@@ -126,7 +126,7 @@ function buscarProducto(e) {
     e.preventDefault();
 
     // SE OBTIENE EL ID A BUSCAR
-    var id = document.getElementById('search').value;
+    var busqueda = document.getElementById('search').value;
 
     // SE CREA EL OBJETO DE CONEXIÓN ASÍNCRONA AL SERVIDOR
     var client = getXMLHttpRequest();
@@ -141,17 +141,19 @@ function buscarProducto(e) {
             let productos = JSON.parse(client.responseText);    // similar a eval('('+client.responseText+')');
             
             // SE VERIFICA SI EL OBJETO JSON TIENE DATOS
-            if(Object.keys(productos).length > 0) {
+            if(productos.length > 0) {
                 // SE CREA UNA LISTA HTML CON LA DESCRIPCIÓN DEL PRODUCTO
-                let descripcion = '';
-                    descripcion += '<li>precio: '+productos.precio+'</li>';
-                    descripcion += '<li>unidades: '+productos.unidades+'</li>';
-                    descripcion += '<li>modelo: '+productos.modelo+'</li>';
-                    descripcion += '<li>marca: '+productos.marca+'</li>';
-                    descripcion += '<li>detalles: '+productos.detalles+'</li>';
+                let templete = '';
+                productos.forEach(producto => {
+                    let descripcion = '';
+                    descripcion += '<li>Precio: '+productos.precio+'</li>';
+                    descripcion += '<li>Unidades: '+productos.unidades+'</li>';
+                    descripcion += '<li>Modelo: '+productos.modelo+'</li>';
+                    descripcion += '<li>Marca: '+productos.marca+'</li>';
+                    descripcion += '<li>Detalles: '+productos.detalles+'</li>';
                 
                 // SE CREA UNA PLANTILLA PARA CREAR LA(S) FILA(S) A INSERTAR EN EL DOCUMENTO HTML
-                let template = '';
+                //let template = '';
                     template += `
                         <tr>
                             <td>${productos.id}</td>
@@ -159,15 +161,18 @@ function buscarProducto(e) {
                             <td><ul>${descripcion}</ul></td>
                         </tr>
                     `;
-
+                });   
                 // SE INSERTA LA PLANTILLA EN EL ELEMENTO CON ID "productos"
                 document.getElementById("productos").innerHTML = template;
+            }else{
+                alert("No se encontraron productos");
             }
         }
     };
-    client.send("id="+id);
+    client.send("busqueda="+busqueda);
 }
 
+//FUNCIONES DE VALIDACIÓN
 function nombre(nom){
 
     if(nom.length > 100 || nom.length==0){
