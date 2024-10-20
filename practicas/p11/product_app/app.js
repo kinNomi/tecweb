@@ -124,6 +124,45 @@ function init() {
 // FUNCIÓN PARA BUSCAR PRODUCTO
 function buscarProducto(e) {
     e.preventDefault();
+    var busqueda = document.getElementById('search').value;
+    let client = getXMLHttpRequest();
+    client.open('POST', './backend/read.php', true);
+    client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    client.onreadystatechange = function () {
+        if (client.readyState == 4 && client.status == 200) {
+            let productos = JSON.parse(client.responseText);
+            
+            if (Object.keys(productos).length > 0) {
+
+                if (productos['error'] == 'Sin resultados') {
+                    alert('No se encontró producto con: '+busqueda);
+                } else {
+                    let contenido = '';
+
+                    productos.forEach(producto => {
+                        let descripcion = `
+                            <li>precio: ${producto.precio}</li>
+                            <li>unidades: ${producto.unidades}</li>
+                            <li>modelo: ${producto.modelo}</li>
+                            <li>marca: ${producto.marca}</li>
+                            <li>detalles: ${producto.detalles}</li>
+                        `;
+
+                        contenido += `
+                            <tr>
+                                <td>${producto.id}</td>
+                                <td>${producto.nombre}</td>
+                                <td><ul>${descripcion}</ul></td>
+                            </tr>
+                        `;
+                    });
+                    document.getElementById("productos").innerHTML = contenido;
+
+                }
+            }
+        }
+    }
+    client.send("busqueda="+busqueda);
 }
 
 //VALIDACIONES
