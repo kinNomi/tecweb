@@ -20,3 +20,70 @@ function init() {
     //listarProductos();
 }
 
+//BUSCADOR
+$(document).ready(function() {
+    console.log('jquery is working!');
+
+    $('#product-result').hide();
+    $('#search').keyup(function(e) {
+        e.preventDefault();
+        if($('#search').val()) {
+            let search = $('#search').val();
+
+            $.ajax({
+                url: 'backend/product-search.php',
+                type: 'GET',
+                data: {search},
+                success: function(response) {
+                    if(!response.error) {
+                        let products = JSON.parse(response);
+                        let template = '';
+
+                        products.forEach(product => {
+                            template += `
+                            <li>
+                            ${product.nombre}
+                            </li>
+                            `
+                        });
+
+                        $('#product-result').show();//SE MUESTRA EL DIV
+                        $('#container').html(template); //SE MUESTRA EL TEMPLATE
+
+                        template = ''; //SE LIMPIA EL TEMPLATE
+                        products.forEach(product => {
+                            template += 
+                            `<tr product-id="${product.id}">
+                                <td>${product.id}</td>
+
+                                <td>
+                                <a href="#" class="product-item">${product.nombre}</a>
+                                </td>
+
+                                <td>
+                                    <ul>
+                                        <li>Marca: ${product.marca}</li>
+                                        <li>Modelo: ${product.modelo}</li>
+                                        <li>Precio: ${product.precio}</li>
+                                        <li>Unidades: ${product.unidades}</li>
+                                        <li>Detalles: ${product.detalles}</li>
+                                    </ul>
+                                </td>
+
+                                <td>
+                                    <button class="product-delete btn btn-danger">Eliminar</button>
+                                </td>
+                            </tr>`;
+                        });
+
+                        $('#products').html(template);
+                    }
+                }
+            });
+        }
+    });
+
+
+    
+});
+
