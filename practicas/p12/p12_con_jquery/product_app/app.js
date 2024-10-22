@@ -116,6 +116,25 @@ $(document).ready(function() {
     });
 
 
+    //ELIMINAR PRODUCTO
+    $(document).on('click', '.product-delete', function(){
+        if (!confirm('¿Estás seguro de querer eliminar este producto?')) {
+            return; // SI NO SE CONFIRMA, NO SE ELIMINA
+        }
+
+        let element = $(this)[0];
+        let columna = element.parentElement;
+        let fila = columna.parentElement;
+
+        let productId = $(fila).attr('product-id');
+
+        $.post('backend/product-delete.php', {id : productId}, function(response){
+            console.log(response);
+            listarProductos();
+            listarProductos();
+        });
+        listarProductos();
+    });
 
 });
 
