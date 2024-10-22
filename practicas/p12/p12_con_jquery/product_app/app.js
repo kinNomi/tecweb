@@ -103,7 +103,33 @@ function listarProductos() {
         url: 'backend/product-list.php',
         type: 'GET',
         success: function(response) {
+            let products = JSON.parse(response);
+            let template = '';
 
+            products.forEach(product => {
+                template += `<tr product-id="${product.id}">
+                    <td>${product.id}</td>
+
+                    <td>
+                        <a href="#" class="product-item">${product.nombre}</a>
+                    </td>   
+                    <td>
+                        <ul>
+                            <li>Marca: ${product.marca}</li>
+                            <li>Modelo: ${product.modelo}</li>
+                            <li>Precio: ${product.precio}</li>
+                            <li>Unidades: ${product.unidades}</li>
+                            <li>Detalles: ${product.detalles}</li>
+                        </ul>
+                    </td>
+
+                    <td>
+                        <button class="product-delete btn btn-danger">Eliminar</button>
+                    </td>
+                </tr>`;
+            });
+
+            $('#products').html(template);
         }
     });
 }
