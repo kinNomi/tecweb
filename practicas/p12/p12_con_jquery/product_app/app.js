@@ -106,13 +106,23 @@ $(document).ready(function() {
         }
         productoJSON = JSON.stringify(productoJSON); // CONVIERTE EL JSON A STRING
 
+        //SI SE EDITA UN PRODUCTO
+        if(edit){
+            $.post('backend/product-edit.php', productoJSON, function(response){
+                console.log(response);
+                listarProductos(); 
+                listarProductos(); // LISTA LOS PRODUCTOS
+            });
+            edit = false;
+            listarProductos();
+            return;
+        }
 
+        //SI SE AGREGA UN PRODUCTO
         $.post('backend/product-add.php', productoJSON, function(response){
             console.log(response);
-            listarProductos(); 
-            listarProductos(); // LISTA LOS PRODUCTOS
+            listarProductos();
         });
-        listarProductos(); // LISTA LOS PRODUCTOS
     });
 
 
@@ -136,7 +146,27 @@ $(document).ready(function() {
         listarProductos();
     });
 
+    //EDITAR PRODUCTO
+    $(document).on('click', '.product-item', function(){
+        let element = $(this)[0].parentElement.parentElement;
+        let productId = $(element).attr('product-id');
+        $.post('backend/product-single.php', {id : id}, function(response){
+            let producto = JSON.parse(response);
+            console.log(producto);
+
+            $('#name').val(producto.nombre);
+            delete producto.nombre;
+            let idProd = producto.id;
+            delete producto.id;
+            $('#description').val(JSON.stringify(producto,null,2));
+            $('#product-id').val(idProd);
+            edit = true;
+        });
+    });
+
 });
+
+
 
 function listarProductos() {
     $.ajax({
