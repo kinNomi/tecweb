@@ -24,7 +24,7 @@ function init() {
 $(document).ready(function() {
     console.log('jquery is working!');
 
-    $('#product-result').hide();
+    //$('#product-result').hide();
     $('#search').keyup(function(e) {
         e.preventDefault();
         if ($('#search').val()) {
