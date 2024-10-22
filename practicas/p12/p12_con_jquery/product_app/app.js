@@ -24,7 +24,7 @@ function init() {
 $(document).ready(function() {
     console.log('jquery is working!');
 
-    //$('#product-result').hide();
+    $('#product-result').hide();
     $('#search').keyup(function(e) {
         e.preventDefault();
         if ($('#search').val()) {
@@ -36,7 +36,7 @@ $(document).ready(function() {
                 data: { search },
                 success: function(response) {
                     if (response == "[]") {
-                        $('#product-result').hide();
+                        //$('#product-result').hide();
                         return;
                     }
 
@@ -51,8 +51,8 @@ $(document).ready(function() {
                         `;
                     });
 
-                    $('#product-result').show(); // SE MUESTRA EL DIV
                     $('#container').html(template); // SE MUESTRA EL TEMPLATE
+                    $('#product-result').show(); // SE MUESTRA EL DIV
 
                     template = ''; // SE LIMPIA EL TEMPLATE
                     products.forEach(product => {
