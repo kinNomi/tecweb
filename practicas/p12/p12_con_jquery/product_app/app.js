@@ -22,8 +22,12 @@ function init() {
 
 // BUSCADOR
 $(document).ready(function() {
+
+    let edit = false;
     console.log('jquery is working!');
 
+    // BUSCADOR
+  
     $('#product-result').hide();
     $('#search').keyup(function(e) {
         e.preventDefault();
@@ -85,16 +89,33 @@ $(document).ready(function() {
             });
         }
     });
-
+    
 
     //AGREGAR PRODUCTO
     $('#product-form').submit(function(e) {
         e.preventDefault();
 
-        const postData = {
+        let productoJSONstring = $('#description').val();
+        let productoJSON = JSON.parse(productoJSONstring);  // PARSEA EL JSON
+        productoJSON['nombre'] = $('#name').val();
+        productoJSON['id'] = $('#product-id').val();
 
+        // VALIDACIONES
+        if(nombre(productoJSON['nombre']) || marca(productoJSON['marca']) || modelo(productoJSON['modelo']) || precio(productoJSON['precio']) || detalles(productoJSON['detalles']) || unidades(productoJSON['unidades'])){
+            return;
         }
+        productoJSON = JSON.stringify(productoJSON); // CONVIERTE EL JSON A STRING
+
+
+        $.post('backend/product-add.php', productoJSON, function(response){
+            console.log(response);
+            listarProductos(); 
+            listarProductos(); // LISTA LOS PRODUCTOS
+        });
+        listarProductos(); // LISTA LOS PRODUCTOS
     });
+
+
 
 });
 
@@ -132,4 +153,70 @@ function listarProductos() {
             $('#products').html(template);
         }
     });
+}
+
+
+//VALIDACIONES
+function nombre(nom){
+
+    if(nom.length > 100 || nom.length==0){
+
+        alert("El nombre debe tener menos de 100 caracteres")
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function marca(mar){
+    let marcas = {
+        "Audi":1,
+        "Toyota":2,
+        "Ford":3,
+        "VW":4
+    };
+    if(marcas[mar] == undefined){
+        alert("La marca debe ser válida");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function modelo(model){
+    let regex = /^[a-zA-Z0-9]{1,25}$/; // Expresión regular
+    if(model.length > 25 || regex.test(model) == false){
+        alert("El modelo debe de ser de menos de 25 caracteres y caracteres válidos");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function precio(precio){
+    if(Number(precio) < 99.99){
+        alert("El precio debe ser mayor a 99.99");
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function detalles(detalles){
+    if(detalles!= ""){
+        if(detalles.length > 255){
+            alert("Los detalles deben tener menos de 255 caracteres");
+            return true;
+        }
+    }
+    return false;
+}
+
+function unidades(unidades){
+    if(Number(unidades) < 0){
+        alert("Las unidades del producto debe ser igual o mayor a cero");
+        return true;
+    }else{
+        return false;
+    }
 }
