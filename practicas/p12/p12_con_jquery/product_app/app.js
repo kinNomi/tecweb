@@ -17,7 +17,7 @@ function init() {
     document.getElementById("description").value = JsonString;
 
     // SE LISTAN TODOS LOS PRODUCTOS
-    //listarProductos();
+    listarProductos();
 }
 
 // BUSCADOR
@@ -85,4 +85,25 @@ $(document).ready(function() {
             });
         }
     });
+
+
+    //AGREGAR PRODUCTO
+    $('#product-form').submit(function(e) {
+        e.preventDefault();
+
+        const postData = {
+
+        }
+    });
+
 });
+
+function listarProductos() {
+    $.ajax({
+        url: 'backend/product-list.php',
+        type: 'GET',
+        success: function(response) {
+
+        }
+    });
+}
