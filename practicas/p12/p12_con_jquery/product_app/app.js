@@ -21,16 +21,89 @@ function init() {
 }
 
 // BUSCADOR
-$(document).ready(function() {
 
+$(document).ready(function() {
+    /*
+    $('#search').keyup(function(e){
+        let search = $('#search').val();
+        $.ajax({
+            url: 'backend/product-search.php',
+            type: 'GET',
+            data: { search },
+            success: function(response){
+                let products = JSON.parse(response);
+                let template = '';
+
+                products.forEach(product => {
+                    template += `<li>${product.nombre}</li>`;
+                });
+            }
+        });
+    });
+    */
     let edit = false;
     console.log('jquery is working!');
 
     // BUSCADOR
-  
+    $('#product-result').hide();
+    $('#search').keyup(function(e){
+        let search = $('#search').val();
+        if(!search){
+            listarProductos();
+            $('#product-result').hide();
+            return;
+        }
+
+        $.ajax({
+            url: 'backend/product-search.php',
+            type: 'GET',
+            data: { search },
+
+            success: function(response){
+                let products = JSON.parse(response);
+                let template = '';
+                products.forEach(product => {
+                    template += `<li>${product.nombre}</li>`;
+                });
+                $('#container').html(template);
+                if(template){
+                    $('#product-result').show();
+                }else{
+                    $('#product-result').hide();
+                }
+
+                let productTemplate = '';
+                products.forEach(product => {
+                    let description = '';
+                    description += '<li>Precio: ' + product.precio + '</li>';
+                    description += '<li>Unidades: ' + product.unidades + '</li>';
+                    description += '<li>Modelo: ' + product.modelo + '</li>';
+                    description += '<li>Marca: ' + product.marca + '</li>';
+                    description += '<li>Detalles: ' + product.detalles + '</li>';
+
+                    productTemplate += `<tr productId="${product.id}">
+                        <td>${product.id}</td>
+                        <td>
+                            <a href="#" class="product-item">${product.nombre}</a>
+                        </td>
+                        <td><ul>${description}</ul></td>
+
+                        <td>
+                            <button class="product-delete btn btn-danger">Eliminar</button>
+                        </td>
+                    </tr>`;
+                });
+
+                $('#products').html(productTemplate);
+            }
+        });
+    });
+    
+    /*
     $('#product-result').hide();
     $('#search').keyup(function(e) {
         e.preventDefault();
+
         if ($('#search').val()) {
             let search = $('#search').val();
 
@@ -39,12 +112,13 @@ $(document).ready(function() {
                 type: 'GET',
                 data: { search },
                 success: function(response) {
-                    if (response == "[]") {
-                        //$('#product-result').hide();
+                    let products = JSON.parse(response);
+                    if (products.length == 0) {
+                        $('#product-result').hide();
                         return;
                     }
 
-                    let products = JSON.parse(response);
+                    //let products = JSON.parse(response);
                     let template = '';
 
                     products.forEach(product => {
@@ -88,8 +162,11 @@ $(document).ready(function() {
                 }
             });
         }
+        else{
+            $('#product-result').hide();
+        }
     });
-    
+    */
 
     //AGREGAR PRODUCTO
     $('#product-form').submit(function(e) {
@@ -150,7 +227,7 @@ $(document).ready(function() {
     $(document).on('click', '.product-item', function(){
         let element = $(this)[0].parentElement.parentElement;
         let productId = $(element).attr('product-id');
-        $.post('backend/product-single.php', {id : id}, function(response){
+        $.post('backend/product-single.php', {id : productId}, function(response){
             let producto = JSON.parse(response);
             console.log(producto);
 
