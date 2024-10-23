@@ -233,8 +233,21 @@ $(document).ready(function() {
     //EDITAR PRODUCTO
     $(document).on('click', '.product-item', function(){
         let element = $(this)[0].parentElement.parentElement;
-        let productId = $(element).attr('product-id');
-        $.post('backend/product-single.php', {id : productId}, function(response){
+        //console.log(element);
+        let id = $(element).attr('product-id');
+        console.log(id);
+        $.post('backend/product-single.php', {id}, function(response) {
+            console.log(response); // Verifica la respuesta
+            try {
+                const producto = JSON.parse(response);
+                $('#name').val(producto.nombre);
+                $('#description').val(JSON.stringify(producto, null, 2));
+            } catch (error) {
+                console.error('Error al analizar JSON:', error, response);
+            }
+        
+        
+            /*
             let producto = JSON.parse(response);
             console.log(producto);
 
@@ -245,7 +258,9 @@ $(document).ready(function() {
             $('#description').val(JSON.stringify(producto,null,2));
             $('#product-id').val(idProd);
             edit = true;
+            */
         });
+        
     });
 
 });
