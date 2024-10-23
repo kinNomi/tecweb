@@ -181,7 +181,7 @@ $(document).ready(function() {
 
         // VALIDACIONES
         if(nombre(productoJSON['nombre']) || marca(productoJSON['marca']) || modelo(productoJSON['modelo']) || precio(productoJSON['precio']) || detalles(productoJSON['detalles']) || unidades(productoJSON['unidades'])){
-            $('#container').append(`<div class="alert alert-danger">Error en los datos</div>`);
+            //$('#container').append(`<div class="alert alert-danger">Error en los datos</div>`);
             return;
         }
         productoJSON = JSON.stringify(productoJSON); // CONVIERTE EL JSON A STRING
@@ -218,7 +218,7 @@ $(document).ready(function() {
         }
 
         let element = $(this)[0].parentElement.parentElement;
-        let id = $(element).attr('productId');
+        let id = $(element).attr('product-id');
 
         $.get('backend/product-delete.php', {id}, function(response){
             let result = typeof response === 'string' ? JSON.parse(response) : response;
@@ -239,9 +239,15 @@ $(document).ready(function() {
         $.post('backend/product-single.php', {id}, function(response) {
             console.log(response); // Verifica la respuesta
             try {
-                const producto = JSON.parse(response);
+                let producto = JSON.parse(response);
+                console.log(producto);
                 $('#name').val(producto.nombre);
+                delete producto.nombre;
+                let idProd = producto.id;
+                delete producto.id;
                 $('#description').val(JSON.stringify(producto, null, 2));
+                $('#product-id').val(idProd);
+                edit = true;
             } catch (error) {
                 console.error('Error al analizar JSON:', error, response);
             }
