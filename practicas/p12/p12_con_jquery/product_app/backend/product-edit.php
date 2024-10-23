@@ -12,7 +12,7 @@
             $id = $jsonOBJ->id;
             $nombre = $jsonOBJ->nombre;
 
-            $sql = "UPDATE INTO productos SET nombre = '{$jsonOBJ->nombre}', marca = '{$jsonOBJ->marca}', modelo = '{$jsonOBJ->modelo}', precio = {$jsonOBJ->precio}, detalles = '{$jsonOBJ->detalles}', unidades = {$jsonOBJ->unidades}, imagen = '{$jsonOBJ->imagen}' WHERE id = {$id}";
+            $sql = "UPDATE productos SET nombre = '{$jsonOBJ->nombre}', marca = '{$jsonOBJ->marca}', modelo = '{$jsonOBJ->modelo}', precio = {$jsonOBJ->precio}, detalles = '{$jsonOBJ->detalles}', unidades = {$jsonOBJ->unidades}, imagen = '{$jsonOBJ->imagen}' WHERE id = {$id}";
             $result = $conexion->query($sql);
         
             if($result){
@@ -23,7 +23,7 @@
                 $data['message'] = "ERROR: No se ejecuto $sql. " . mysqli_error($conexion);
             }
 
-            $result->free();
+            //$result->free();
         }
 
 
@@ -31,7 +31,7 @@
         $conexion->close();
     }
         
-    header('Content-Type: application/json');
+    //header('Content-Type: application/json');
     // SE HACE LA CONVERSIÓN DE ARRAY A JSON
     echo json_encode($data, JSON_PRETTY_PRINT);
 ?>
