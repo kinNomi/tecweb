@@ -4,9 +4,9 @@
     if( isset($_POST['id']) ) {
         if($result = $conexion->query("SELECT * FROM productos WHERE id = {$_POST['id']} AND eliminado = 0")) {
     
-            $info = array();
+            $json = array();
             if($row = mysqli_fetch_assoc($result)) {
-                $info = array(
+                $json = array(
                     'id' => $row['id'],
                     'nombre' => $row['nombre'],
                     'marca' => $row['marca'],
@@ -18,7 +18,7 @@
                 );
 
             }else{
-                $info = null;
+                $json = null;
             }
 
             $result->free();
@@ -30,6 +30,6 @@
         $conexion->close();
     }
 
-    echo json_encode($info, JSON_PRETTY_PRINT);
+    echo json_encode($json, JSON_PRETTY_PRINT);
     
 ?>
