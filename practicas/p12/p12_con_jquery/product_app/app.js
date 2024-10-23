@@ -189,20 +189,26 @@ $(document).ready(function() {
         //SI SE EDITA UN PRODUCTO
         if(edit){
             $.post('backend/product-edit.php', productoJSON, function(response){
-                console.log(response);
+                let result = JSON.parse(response);
+                $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
                 listarProductos(); 
-                listarProductos(); // LISTA LOS PRODUCTOS
+                /*
+                console.log(response);
+                console.log(productoJSON);
+                listarProductos(); 
+                */
             });
             edit = false;
-            listarProductos();
+            //listarProductos();
             return;
         }
 
         //SI SE AGREGA UN PRODUCTO
         $.post('backend/product-add.php', productoJSON, function(response){
-            let result = typeof response === 'string' ? JSON.parse(response) : response;
+            let result = JSON.parse(response);
+            //let result = typeof response === 'string' ? JSON.parse(response) : response;
             $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
-            $('#product-result').show();
+            //$('#product-result').show();
             //console.log(response);
             listarProductos();
         });
@@ -221,11 +227,13 @@ $(document).ready(function() {
         let id = $(element).attr('product-id');
 
         $.get('backend/product-delete.php', {id}, function(response){
-            let result = typeof response === 'string' ? JSON.parse(response) : response;
-            listarProductos();
+            let result = JSON.parse(response);
+            //let result = typeof response === 'string' ? JSON.parse(response) : response;
+            //listarProductos();
 
             $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
-            $('#product-result').show();
+            listarProductos();
+            //$('#product-result').show();
         });
         //listarProductos();
     });
@@ -237,16 +245,17 @@ $(document).ready(function() {
         let id = $(element).attr('product-id');
         console.log(id);
         $.post('backend/product-single.php', {id}, function(response) {
-            console.log(response); // Verifica la respuesta
+            //console.log(response); // Verifica la respuesta
             try {
                 let producto = JSON.parse(response);
                 console.log(producto);
                 $('#name').val(producto.nombre);
+                $('#product-id').val(producto.id);
                 delete producto.nombre;
-                let idProd = producto.id;
+                //let idProd = producto.id;
                 delete producto.id;
                 $('#description').val(JSON.stringify(producto, null, 2));
-                $('#product-id').val(idProd);
+                //$('#product-id').val(idProd);
                 edit = true;
             } catch (error) {
                 console.error('Error al analizar JSON:', error, response);
@@ -268,6 +277,7 @@ $(document).ready(function() {
         });
         
     });
+    listarProductos();
 
 });
 
