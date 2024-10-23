@@ -20,27 +20,9 @@ function init() {
     listarProductos();
 }
 
-// BUSCADOR
 
 $(document).ready(function() {
-    /*
-    $('#search').keyup(function(e){
-        let search = $('#search').val();
-        $.ajax({
-            url: 'backend/product-search.php',
-            type: 'GET',
-            data: { search },
-            success: function(response){
-                let products = JSON.parse(response);
-                let template = '';
-
-                products.forEach(product => {
-                    template += `<li>${product.nombre}</li>`;
-                });
-            }
-        });
-    });
-    */
+   
     let edit = false;
     console.log('jquery is working!');
 
@@ -99,75 +81,7 @@ $(document).ready(function() {
         });
     });
     
-    /*
-    $('#product-result').hide();
-    $('#search').keyup(function(e) {
-        e.preventDefault();
-
-        if ($('#search').val()) {
-            let search = $('#search').val();
-
-            $.ajax({
-                url: 'backend/product-search.php',
-                type: 'GET',
-                data: { search },
-                success: function(response) {
-                    let products = JSON.parse(response);
-                    if (products.length == 0) {
-                        $('#product-result').hide();
-                        return;
-                    }
-
-                    //let products = JSON.parse(response);
-                    let template = '';
-
-                    products.forEach(product => {
-                        template += `
-                        <li>
-                        ${product.nombre}
-                        </li>
-                        `;
-                    });
-
-                    $('#container').html(template); // SE MUESTRA EL TEMPLATE
-                    $('#product-result').show(); // SE MUESTRA EL DIV
-
-                    template = ''; // SE LIMPIA EL TEMPLATE
-                    products.forEach(product => {
-                        template += `
-                        <tr product-id="${product.id}">
-                            <td>${product.id}</td>
-
-                            <td>
-                                <a href="#" class="product-item">${product.nombre}</a>
-                            </td>
-
-                            <td>
-                                <ul>
-                                    <li>Marca: ${product.marca}</li>
-                                    <li>Modelo: ${product.modelo}</li>
-                                    <li>Precio: ${product.precio}</li>
-                                    <li>Unidades: ${product.unidades}</li>
-                                    <li>Detalles: ${product.detalles}</li>
-                                </ul>
-                            </td>
-
-                            <td>
-                                <button class="product-delete btn btn-danger">Eliminar</button>
-                            </td>
-                        </tr>`;
-                    });
-
-                    $('#products').html(template);
-                }
-            });
-        }
-        else{
-            $('#product-result').hide();
-        }
-    });
-    */
-
+   
     //AGREGAR PRODUCTO
     $('#product-form').submit(function(e) {
         e.preventDefault();
@@ -177,7 +91,7 @@ $(document).ready(function() {
         let productoJSONstring = $('#description').val();
         let productoJSON = JSON.parse(productoJSONstring);  // PARSEA EL JSON
         productoJSON['nombre'] = $('#name').val();
-        productoJSON['id'] = $('#product-id').val();
+        productoJSON['id'] = $('#productId').val();
 
         // VALIDACIONES
         if(nombre(productoJSON['nombre']) || marca(productoJSON['marca']) || modelo(productoJSON['modelo']) || precio(productoJSON['precio']) || detalles(productoJSON['detalles']) || unidades(productoJSON['unidades'])){
@@ -192,14 +106,8 @@ $(document).ready(function() {
                 let result = JSON.parse(response);
                 $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
                 listarProductos(); 
-                /*
-                console.log(response);
-                console.log(productoJSON);
-                listarProductos(); 
-                */
             });
             edit = false;
-            //listarProductos();
             return;
         }
 
@@ -209,7 +117,6 @@ $(document).ready(function() {
             //let result = typeof response === 'string' ? JSON.parse(response) : response;
             $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
             //$('#product-result').show();
-            //console.log(response);
             listarProductos();
         });
     });
@@ -224,56 +131,36 @@ $(document).ready(function() {
         }
 
         let element = $(this)[0].parentElement.parentElement;
-        let id = $(element).attr('product-id');
+        let id = $(element).attr('productId');
 
         $.get('backend/product-delete.php', {id}, function(response){
             let result = JSON.parse(response);
-            //let result = typeof response === 'string' ? JSON.parse(response) : response;
-            //listarProductos();
+            
 
             $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
             listarProductos();
             //$('#product-result').show();
         });
-        //listarProductos();
     });
 
     //EDITAR PRODUCTO
     $(document).on('click', '.product-item', function(){
         let element = $(this)[0].parentElement.parentElement;
-        //console.log(element);
-        let id = $(element).attr('product-id');
+        let id = $(element).attr('productId');
         console.log(id);
         $.post('backend/product-single.php', {id}, function(response) {
-            //console.log(response); // Verifica la respuesta
             try {
                 let producto = JSON.parse(response);
                 console.log(producto);
                 $('#name').val(producto.nombre);
-                $('#product-id').val(producto.id);
+                $('#productId').val(producto.id);
                 delete producto.nombre;
-                //let idProd = producto.id;
                 delete producto.id;
                 $('#description').val(JSON.stringify(producto, null, 2));
-                //$('#product-id').val(idProd);
                 edit = true;
             } catch (error) {
                 console.error('Error al analizar JSON:', error, response);
             }
-        
-        
-            /*
-            let producto = JSON.parse(response);
-            console.log(producto);
-
-            $('#name').val(producto.nombre);
-            delete producto.nombre;
-            let idProd = producto.id;
-            delete producto.id;
-            $('#description').val(JSON.stringify(producto,null,2));
-            $('#product-id').val(idProd);
-            edit = true;
-            */
         });
         
     });
@@ -292,7 +179,7 @@ function listarProductos() {
             let template = '';
 
             products.forEach(product => {
-                template += `<tr product-id="${product.id}">
+                template += `<tr productId="${product.id}">
                     <td>${product.id}</td>
 
                     <td>

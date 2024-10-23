@@ -35,11 +35,7 @@
     }
     // Cierra la conexion
     $conexion->close();
-    //$result->free();
-    
-
-        
-    //header('Content-Type: application/json');
+   
     // SE HACE LA CONVERSIÓN DE ARRAY A JSON
     echo json_encode($data, JSON_PRETTY_PRINT);
 ?>
