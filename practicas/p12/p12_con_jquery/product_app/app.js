@@ -87,7 +87,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         $('#container').html('');
-        $('#product-result').hide();
+        //$('#product-result').hide();
         let productoJSONstring = $('#description').val();
         let productoJSON = JSON.parse(productoJSONstring);  // PARSEA EL JSON
         productoJSON['nombre'] = $('#name').val();
@@ -95,7 +95,7 @@ $(document).ready(function() {
 
         // VALIDACIONES
         if(nombre(productoJSON['nombre']) || marca(productoJSON['marca']) || modelo(productoJSON['modelo']) || precio(productoJSON['precio']) || detalles(productoJSON['detalles']) || unidades(productoJSON['unidades'])){
-            //$('#container').append(`<div class="alert alert-danger">Error en los datos</div>`);
+            $('#container').append(`<div class="alert alert-danger">Error en los datos</div>`);
             return;
         }
         productoJSON = JSON.stringify(productoJSON); // CONVIERTE EL JSON A STRING
@@ -103,8 +103,10 @@ $(document).ready(function() {
         //SI SE EDITA UN PRODUCTO
         if(edit){
             $.post('backend/product-edit.php', productoJSON, function(response){
+                $('#container').html('');
                 let result = JSON.parse(response);
                 $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
+                $('#product-result').show();
                 listarProductos(); 
             });
             edit = false;
@@ -114,9 +116,10 @@ $(document).ready(function() {
         //SI SE AGREGA UN PRODUCTO
         $.post('backend/product-add.php', productoJSON, function(response){
             let result = JSON.parse(response);
+            $('#container').html('');
             //let result = typeof response === 'string' ? JSON.parse(response) : response;
             $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
-            //$('#product-result').show();
+            $('#product-result').show();
             listarProductos();
         });
     });
@@ -125,7 +128,7 @@ $(document).ready(function() {
     //ELIMINAR PRODUCTO
     $(document).on('click', '.product-delete', function(){
         $('#container').html('');
-        $('#product-result').hide();
+        //$('#product-result').hide();
         if (!confirm('¿Estás seguro de querer eliminar este producto?')) {
             return; // SI NO SE CONFIRMA, NO SE ELIMINA
         }
@@ -138,6 +141,7 @@ $(document).ready(function() {
             
 
             $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
+            $('#product-result').show();
             listarProductos();
             //$('#product-result').show();
         });
