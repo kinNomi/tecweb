@@ -87,7 +87,6 @@ $(document).ready(function() {
         e.preventDefault();
 
         $('#container').html('');
-        //$('#product-result').hide();
         let productoJSONstring = $('#description').val();
         let productoJSON = JSON.parse(productoJSONstring);  // PARSEA EL JSON
         productoJSON['nombre'] = $('#name').val();
@@ -128,7 +127,6 @@ $(document).ready(function() {
     //ELIMINAR PRODUCTO
     $(document).on('click', '.product-delete', function(){
         $('#container').html('');
-        //$('#product-result').hide();
         if (!confirm('¿Estás seguro de querer eliminar este producto?')) {
             return; // SI NO SE CONFIRMA, NO SE ELIMINA
         }
@@ -143,7 +141,6 @@ $(document).ready(function() {
             $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
             $('#product-result').show();
             listarProductos();
-            //$('#product-result').show();
         });
     });
 
