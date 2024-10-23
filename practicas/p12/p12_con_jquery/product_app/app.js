@@ -172,6 +172,8 @@ $(document).ready(function() {
     $('#product-form').submit(function(e) {
         e.preventDefault();
 
+        $('#container').html('');
+        $('#product-result').hide();
         let productoJSONstring = $('#description').val();
         let productoJSON = JSON.parse(productoJSONstring);  // PARSEA EL JSON
         productoJSON['nombre'] = $('#name').val();
@@ -179,6 +181,7 @@ $(document).ready(function() {
 
         // VALIDACIONES
         if(nombre(productoJSON['nombre']) || marca(productoJSON['marca']) || modelo(productoJSON['modelo']) || precio(productoJSON['precio']) || detalles(productoJSON['detalles']) || unidades(productoJSON['unidades'])){
+            $('#container').append(`<div class="alert alert-danger">Error en los datos</div>`);
             return;
         }
         productoJSON = JSON.stringify(productoJSON); // CONVIERTE EL JSON A STRING
@@ -197,7 +200,10 @@ $(document).ready(function() {
 
         //SI SE AGREGA UN PRODUCTO
         $.post('backend/product-add.php', productoJSON, function(response){
-            console.log(response);
+            let result = typeof response === 'string' ? JSON.parse(response) : response;
+            $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
+            $('#product-result').show();
+            //console.log(response);
             listarProductos();
         });
     });
