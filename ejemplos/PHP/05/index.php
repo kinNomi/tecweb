@@ -7,9 +7,14 @@
 <body>
     <?php
     require_once __DIR__ . '/Pagina.php';
-    $pagina = new Pagina('Título de la página', 'Pie de la página');
-    $pagina->insertar_cuerpo('Este es el cuerpo de la página.');
-    $pagina->graficar();
+
+    $pag = new Pagina('El rincón del Programador', 'El sótano del Programador');
+
+    for($i = 0; $i <= 15; $i++){
+        $pag->insertar_cuerpo('Prueba No. ' . ($i+1) . ' que debe aparecer en la página');
+    }
+
+    $pag->graficar();
     ?>
 </body>
 </html>
