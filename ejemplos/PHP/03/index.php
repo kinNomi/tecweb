@@ -8,6 +8,16 @@
 
 <body>
     <?php
+
+    /*
+    use EJEMPLOS\POO\Cabecera as Cabecera;  //usamos la clase Cabecera y le cambiamos el nombre a Cabecera
+    require_once __DIR__ . '/Cabecera.php'; //incluimos el archivo Cabecera.php
+
+
+    $cab = new Cabecera('El rincón del programador', 'center');
+    $cab->graficar();
+    */
+    
     use EJEMPLOS\POO\Cabecera2 as Cabecera;  //usamos la clase Cabecera y le cambiamos el nombre a Cabecera
     require_once __DIR__ . '/Cabecera.php'; //incluimos el archivo Cabecera.php
 
