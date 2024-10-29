@@ -35,7 +35,9 @@ class Menu{
         if($this->direccion === 'horizontal'){
             $this->graficar_horizontal();
         }else{
-            $this->graficar_vertical();
+            if($this->direccion === 'vertical'){
+                $this->graficar_vertical();
+            }
         }
     }
 }
