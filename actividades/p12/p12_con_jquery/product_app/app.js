@@ -209,66 +209,79 @@ function listarProductos() {
 
 
 //VALIDACIONES
-function nombre(nom){
+function validarNombre(){
 
+    let nom = $('name').val();
     if(nom.length > 100 || nom.length==0){
-
-        alert("El nombre debe tener menos de 100 caracteres")
-        return true;
-    }else{
+        $('#nameStatus').text("El nombre debe tener menos de 100 caracteres").addClass("text-danger");
+        //alert("El nombre debe tener menos de 100 caracteres")
         return false;
+    }else{
+        $('#nameStatus').text("Nombre válido").removeClass("text-danger").addClass("text-success");
+        return true;
     }
 }
 
-function marca(mar){
-    let marcas = {
-        "Audi":1,
-        "Toyota":2,
-        "Ford":3,
-        "VW":4
-    };
-    if(marcas[mar] == undefined){
-        alert("La marca debe ser válida");
-        return true;
-    }else{
+function validarMarca(){
+    let mar = $('#brand').val();
+    if(!mar){
+        $('#brandStatus').text("Seleccione una marca válida").addClass("text-danger");
         return false;
+    }else{
+        $('#brandStatus').text("Marca válido").removeClass("text-danger").addClass("text-success");
+        return true;
     }
 }
 
-function modelo(model){
+function validarModelo(){
+    let model = $('#model').val();
     let regex = /^[a-zA-Z0-9]{1,25}$/; // Expresión regular
-    if(model.length > 25 || regex.test(model) == false){
-        alert("El modelo debe de ser de menos de 25 caracteres y caracteres válidos");
-        return true;
-    }else{
+    if(!regex.test(model)){
+        $('#modelStatus').text("El modelo debe de ser de menos de 25 caracteres y tener caracteres válidos").addClass("text-danger");
+        //alert("El modelo debe de ser de menos de 25 caracteres y tener caracteres válidos");
         return false;
+    }else{
+        $('#modelStatus').text("Modelo válido").removeClass("text-danger").addClass("text-success");
+        return true;
     }
 }
 
-function precio(precio){
-    if(Number(precio) < 99.99){
-        alert("El precio debe ser mayor a 99.99");
-        return true;
-    }else{
+function validarPrecio(){
+    let precio = parseFloat($('#price').val());
+
+    if(isNaN(precio) || precio < 99.99){
+        $('#priceStatus').text("El precio debe ser mayor a 99.99").addClass("text-danger");
+        //alert("El precio debe ser mayor a 99.99");
         return false;
+    }else{
+        $('#priceStatus').text("Precio válido").removeClass("text-danger").addClass("text-success");
+        return true;
     }
 }
 
-function detalles(detalles){
-    if(detalles!= ""){
+function validarDetalles(){
+    let detalles = $('#details').val();
+    if(detalles != ""){
         if(detalles.length > 255){
-            alert("Los detalles deben tener menos de 255 caracteres");
-            return true;
+            $('#detailsStatus').text("Los detalles deben tener menos de 255 caracteres").addClass("text-danger");
+            //alert("Los detalles deben tener menos de 255 caracteres");
+            return false;
+        }else{
+            $('#detailsStatus').text("Detalles válidos").removeClass("text-danger").addClass("text-success");
+                return true;
         }
     }
-    return false;
+    return true;
 }
 
-function unidades(unidades){
-    if(Number(unidades) < 0){
-        alert("Las unidades del producto debe ser igual o mayor a cero");
-        return true;
-    }else{
+function validarUnidades(){
+    let unidades = $('#units').val();
+    if(isNaN(unidades) || unidades < 0){
+        $('#unitsStatus').text("Las unidades del producto debe ser igual o mayor a cero").addClass("text-danger");
+        //alert("Las unidades del producto debe ser igual o mayor a cero");
         return false;
+    }else{
+        $('#unitsStatus').text("Unidades válidas").removeClass("text-danger").addClass("text-success");
+        return true;
     }
 }
