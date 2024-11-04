@@ -143,9 +143,20 @@ $(document).ready(function() {
                 listarProductos(); 
             });
             edit = false;
-            return;
+            //return;
+        }else{
+            //SI SE AGREGA UN PRODUCTO
+            $.post('backend/product-add.php', productoJSON, function(response){
+                $('#container').html('');
+                let result = JSON.parse(response);
+                $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
+                $('#product-result').show();
+                listarProductos(); 
+            });
+
         }
 
+        /*
         //SI SE AGREGA UN PRODUCTO
         $.post('backend/product-add.php', productoJSON, function(response){
             let result = JSON.parse(response);
@@ -155,6 +166,7 @@ $(document).ready(function() {
             $('#product-result').show();
             listarProductos();
         });
+        */
     });
 
 
