@@ -105,7 +105,9 @@ $(document).ready(function() {
         let unidadesValidas = validarUnidades();
 
         if (!(nombreValido && marcaValida && modeloValido && precioValido && detallesValidos && unidadesValidas)) {
-            $('#container').append(`<div class="alert alert-danger">Error en los datos</div>`);
+            $('#container').append(`<div class="alert alert-danger">Complete los datos</div>`);
+            $('#product-result').show();
+
             return;
         }
 
@@ -148,7 +150,7 @@ $(document).ready(function() {
             //SI SE AGREGA UN PRODUCTO
             $.post('backend/product-add.php', JSON.stringify(productoJSON), function(response){
                 $('#container').html('');
-                console.log(response);
+                //console.log(response);
                 let result = JSON.parse(response);
                 $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
                 $('#product-result').show();
