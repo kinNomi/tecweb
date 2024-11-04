@@ -95,6 +95,32 @@ $(document).ready(function() {
         e.preventDefault();
 
         $('#container').html('');
+
+        //VALIDACIONES
+        let nombreValido = validarNombre();
+        let marcaValida = validarMarca();
+        let modeloValido = validarModelo();
+        let precioValido = validarPrecio();
+        let detallesValidos = validarDetalles();
+        let unidadesValidas = validarUnidades();
+
+        if (!(nombreValido && marcaValida && modeloValido && precioValido && detallesValidos && unidadesValidas)) {
+            $('#container').append(`<div class="alert alert-danger">Error en los datos</div>`);
+            return;
+        }
+
+        //SE CREA EL JSON DEL PRODUCTO
+        let productoJSON = {
+            nombre: $('#name').val(),
+            id: $('#productId').val(),
+            marca: $('#brand').val(),
+            modelo: $('#model').val(),
+            precio: parseFloat($('#price').val()),
+            unidades: parseInt($('#units').val()),
+            detalles: $('#details').val(),
+            imagen: $('#image').val() || 'img/default.png'
+        };
+        /*
         let productoJSONstring = $('#description').val();
         let productoJSON = JSON.parse(productoJSONstring);  // PARSEA EL JSON
         productoJSON['nombre'] = $('#name').val();
@@ -106,7 +132,7 @@ $(document).ready(function() {
             return;
         }
         productoJSON = JSON.stringify(productoJSON); // CONVIERTE EL JSON A STRING
-
+        */
         //SI SE EDITA UN PRODUCTO
         if(edit){
             $.post('backend/product-edit.php', productoJSON, function(response){
