@@ -34,6 +34,29 @@ $(document).ready(function() {
     $('#units').blur(validarUnidades);
     $('#details').blur(validarDetalles);
 
+    //VALIDACION NOMBRE
+    $('#name').keyup(function() {
+        let nombreProducto = $(this).val().trim();
+    
+        if (nombreProducto.length > 0) {
+            $.ajax({
+                url: 'backend/product-validateName.php',
+                type: 'GET',
+                data: { nombre: nombreProducto },
+                success: function(response) {
+                    let result = JSON.parse(response);
+                    if (result.exists) {
+                        $('#nameStatus').text("El nombre del producto ya existe").removeClass("text-success").addClass("text-danger");
+                    } else {
+                        $('#nameStatus').text("Nombre disponible").removeClass("text-danger").addClass("text-success");
+                    }
+                }
+            });
+        } else {
+            $('#nameStatus').text("").removeClass("text-danger text-success");
+        }
+    });
+
     // BUSCADOR
     $('#product-result').hide();
     $('#search').keyup(function(e){
