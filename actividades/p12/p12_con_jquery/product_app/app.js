@@ -198,12 +198,19 @@ $(document).ready(function() {
         $.post('backend/product-single.php', {id}, function(response) {
             try {
                 let producto = JSON.parse(response);
+
                 console.log(producto);
                 $('#name').val(producto.nombre);
                 $('#productId').val(producto.id);
                 delete producto.nombre;
                 delete producto.id;
-                $('#description').val(JSON.stringify(producto, null, 2));
+                $('#brand').val(producto.marca);
+                $('#model').val(producto.modelo);
+                $('#price').val(producto.precio);
+                $('#units').val(producto.unidades);
+                $('#details').val(producto.detalles);
+                $('#image').val(producto.imagen);
+                //$('#description').val(JSON.stringify(producto, null, 2));
                 edit = true;
             } catch (error) {
                 console.error('Error al analizar JSON:', error, response);
