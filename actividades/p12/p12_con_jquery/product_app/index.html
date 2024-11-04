@@ -33,7 +33,20 @@
               <form id="product-form">
                 <div class="form-group">
                   <input class="form-control" type="text" id="name" placeholder="Nombre de producto">
+                  <small id="nameStatus" class="form-text text-muted"></small>
                 </div>
+                
+                <div class="form-group">
+                  <select class="form-control" id="brand">
+                    <option value="">Seleccione una marca</option>
+                    <option value="Audi">Audi</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Ford">Ford</option>
+                    <option value="VW">VW</option>
+                  </select>
+                  <small id="brandStatus" class=" form-text text-muted"></small>
+                </div>
+
                 <div class="form-group">
                   <textarea class="form-control" id="description" cols="30" rows="10" placeholder="JSON de producto"></textarea>
                 </div>
@@ -42,6 +55,7 @@
                   Agregar Producto
                 </button>
               </form>
+              <!---->
             </div>
           </div>
         </div>
