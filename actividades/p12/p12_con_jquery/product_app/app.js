@@ -13,8 +13,8 @@ function init() {
      * Convierte el JSON a string para poder mostrarlo
      * ver: https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/JSON
      */
-    var JsonString = JSON.stringify(baseJSON,null,2);
-    document.getElementById("description").value = JsonString;
+    //var JsonString = JSON.stringify(baseJSON,null,2);
+    //document.getElementById("description").value = JsonString;
 
     // SE LISTAN TODOS LOS PRODUCTOS
     listarProductos();
@@ -25,6 +25,14 @@ $(document).ready(function() {
    
     let edit = false;
     console.log('jquery is working!');
+
+    //INICIALIZACION DE LOS EVENTOS DE VALIDACION
+    $('#name').blur(validarNombre);
+    $('#brand').blur(validarMarca);
+    $('#model').blur(validarModelo);
+    $('#price').blur(validarPrecio);
+    $('#units').blur(validarUnidades);
+    $('#details').blur(validarDetalles);
 
     // BUSCADOR
     $('#product-result').hide();
