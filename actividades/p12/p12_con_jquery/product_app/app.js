@@ -146,8 +146,9 @@ $(document).ready(function() {
             //return;
         }else{
             //SI SE AGREGA UN PRODUCTO
-            $.post('backend/product-add.php', productoJSON, function(response){
+            $.post('backend/product-add.php', JSON.stringify(productoJSON), function(response){
                 $('#container').html('');
+                console.log(response);
                 let result = JSON.parse(response);
                 $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
                 $('#product-result').show();
@@ -264,7 +265,7 @@ function listarProductos() {
 //VALIDACIONES
 function validarNombre(){
 
-    let nom = $('name').val();
+    let nom = $('#name').val();
     if(nom.length > 100 || nom.length==0){
         $('#nameStatus').text("El nombre debe tener menos de 100 caracteres").addClass("text-danger");
         //alert("El nombre debe tener menos de 100 caracteres")
