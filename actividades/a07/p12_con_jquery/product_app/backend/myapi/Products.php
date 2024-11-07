@@ -1,19 +1,17 @@
 <?php
-namespace myapi;
+namespace MYAPI;
 
 require_once __DIR__ . '/DataBase.php';  //LLAMA AL ARCHIVO
-use myapi\DataBase;     //SE HACE USO DE LA CLASE
+use MYAPI\DataBase;     //SE HACE USO DE LA CLASE
 
 
 class Products extends DataBase
 {
-    //private $data;
     private $response;    
 
 
-    public function __construct($user, $pass, $db){
-        parent::__construct($user, $pass, $db);
-        //$this->data = [];
+    public function __construct($db, $user='root', $pass='kin12345'){
+        parent::__construct($db, $user, $pass);
         $this->response = [];
     }
 
