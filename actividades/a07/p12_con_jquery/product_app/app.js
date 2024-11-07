@@ -40,7 +40,7 @@ $(document).ready(function() {
     
         if (nombreProducto.length > 0) {
             $.ajax({
-                url: 'backend/product-singleByName.php',
+                url: 'backend/product-searchName.php',
                 type: 'GET',
                 data: { nombre: nombreProducto },
                 success: function(response) {
