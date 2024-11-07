@@ -40,7 +40,7 @@ $(document).ready(function() {
     
         if (nombreProducto.length > 0) {
             $.ajax({
-                url: 'backend/product-validateName.php',
+                url: 'backend/product-singleByName.php',
                 type: 'GET',
                 data: { nombre: nombreProducto },
                 success: function(response) {
@@ -145,19 +145,7 @@ $(document).ready(function() {
             detalles: $('#details').val(),
             imagen: $('#image').val() || 'img/default.png'
         };
-        /*
-        let productoJSONstring = $('#description').val();
-        let productoJSON = JSON.parse(productoJSONstring);  // PARSEA EL JSON
-        productoJSON['nombre'] = $('#name').val();
-        productoJSON['id'] = $('#productId').val();
-
-        // VALIDACIONES
-        if(nombre(productoJSON['nombre']) || marca(productoJSON['marca']) || modelo(productoJSON['modelo']) || precio(productoJSON['precio']) || detalles(productoJSON['detalles']) || unidades(productoJSON['unidades'])){
-            $('#container').append(`<div class="alert alert-danger">Error en los datos</div>`);
-            return;
-        }
-        productoJSON = JSON.stringify(productoJSON); // CONVIERTE EL JSON A STRING
-        */
+      
         //SI SE EDITA UN PRODUCTO
         if(edit){
             $.post('backend/product-edit.php', productoJSON, function(response){
@@ -173,7 +161,6 @@ $(document).ready(function() {
             //SI SE AGREGA UN PRODUCTO
             $.post('backend/product-add.php', JSON.stringify(productoJSON), function(response){
                 $('#container').html('');
-                //console.log(response);
                 let result = JSON.parse(response);
                 $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
                 $('#product-result').show();
@@ -182,17 +169,6 @@ $(document).ready(function() {
 
         }
 
-        /*
-        //SI SE AGREGA UN PRODUCTO
-        $.post('backend/product-add.php', productoJSON, function(response){
-            let result = JSON.parse(response);
-            $('#container').html('');
-            //let result = typeof response === 'string' ? JSON.parse(response) : response;
-            $('#container').append(`<div class="alert alert-${result.status}">${result.message}</div>`);
-            $('#product-result').show();
-            listarProductos();
-        });
-        */
     });
 
 
@@ -236,7 +212,6 @@ $(document).ready(function() {
                 $('#units').val(producto.unidades);
                 $('#details').val(producto.detalles);
                 $('#image').val(producto.imagen);
-                //$('#description').val(JSON.stringify(producto, null, 2));
                 edit = true;
             } catch (error) {
                 console.error('Error al analizar JSON:', error, response);
@@ -293,7 +268,6 @@ function validarNombre(){
     let nom = $('#name').val();
     if(nom.length > 100 || nom.length==0){
         $('#nameStatus').text("El nombre debe tener menos de 100 caracteres").addClass("text-danger");
-        //alert("El nombre debe tener menos de 100 caracteres")
         return false;
     }else{
         $('#nameStatus').text("Nombre válido").removeClass("text-danger").addClass("text-success");
@@ -317,7 +291,6 @@ function validarModelo(){
     let regex = /^[a-zA-Z0-9]{1,25}$/; // Expresión regular
     if(!regex.test(model)){
         $('#modelStatus').text("El modelo debe de ser de menos de 25 caracteres y tener caracteres válidos").addClass("text-danger");
-        //alert("El modelo debe de ser de menos de 25 caracteres y tener caracteres válidos");
         return false;
     }else{
         $('#modelStatus').text("Modelo válido").removeClass("text-danger").addClass("text-success");
@@ -330,7 +303,6 @@ function validarPrecio(){
 
     if(isNaN(precio) || precio < 99.99){
         $('#priceStatus').text("El precio debe ser mayor a 99.99").addClass("text-danger");
-        //alert("El precio debe ser mayor a 99.99");
         return false;
     }else{
         $('#priceStatus').text("Precio válido").removeClass("text-danger").addClass("text-success");
@@ -343,7 +315,6 @@ function validarDetalles(){
     if(detalles != ""){
         if(detalles.length > 255){
             $('#detailsStatus').text("Los detalles deben tener menos de 255 caracteres").addClass("text-danger");
-            //alert("Los detalles deben tener menos de 255 caracteres");
             return false;
         }else{
             $('#detailsStatus').text("Detalles válidos").removeClass("text-danger").addClass("text-success");
@@ -357,7 +328,6 @@ function validarUnidades(){
     let unidades = $('#units').val();
     if(isNaN(unidades) || unidades < 0){
         $('#unitsStatus').text("Las unidades del producto debe ser igual o mayor a cero").addClass("text-danger");
-        //alert("Las unidades del producto debe ser igual o mayor a cero");
         return false;
     }else{
         $('#unitsStatus').text("Unidades válidas").removeClass("text-danger").addClass("text-success");
