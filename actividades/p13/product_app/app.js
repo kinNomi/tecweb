@@ -11,6 +11,74 @@ var baseJSON = {
 $(document).ready(function(){
     let edit = false;
 
+    //VALIDACIONES
+    function validarNombre(name) {
+        // Check for required field and length (100 chars max)
+        if (!name || name.length > 100) {
+            $("#nameStatus").text("Nombre 100 caracteres o menos.");
+            return false;
+        } else {
+            $("#nameStatus").text("");
+            return true;
+        }
+    }
+
+    function validarMarca(brand) {
+      // Check for required selection.
+      if (!brand) {
+          $("#brandStatus").text("Marca requerida.");
+          return false;
+      } else {
+          $("#brandStatus").text("");
+          return true;
+      }
+    }
+
+
+    function validarModelo(model) {
+        // Check for required field, alphanumeric characters, and length (25 chars max)
+        if (!model || !/^[a-zA-Z0-9]+$/.test(model) || model.length > 25) {
+            $("#modelStatus").text("Modelo con 25 caracteres o menos.");
+            return false;
+        } else {
+            $("#modelStatus").text("");
+            return true;
+        }
+    }
+
+    function validarPrecio(price) {
+        // Check for required field and minimum value
+        if (!price || parseFloat(price) <= 99.99) {
+            $("#priceStatus").text("Precio mayor a 99.99.");
+            return false;
+        } else {
+            $("#priceStatus").text("");
+            return true;
+        }
+    }
+
+    function validarUnidades(units) {
+        // Check for required field and non-negative value
+        if (!units || parseInt(units) < 0) {
+            $("#unitsStatus").text("Unidades positivas.");
+            return false;
+        } else {
+            $("#unitsStatus").text("");
+            return true;
+        }
+    }
+
+    function validarDetalles(details) {
+        // Check for maximum length (250 chars)
+        if (details && details.length > 250) {
+            $("#detailsStatus").text("Detalles con 250 caracteres o menos.");
+            return false;
+        } else {
+            $("#detailsStatus").text("");
+            return true;
+        }
+    }
+
     //let JsonString = JSON.stringify(baseJSON,null,2);
     //$('#description').val(JsonString);
     $('#product-result').hide();
