@@ -230,25 +230,6 @@ $(document).ready(function(){
         let price = validarPrecio();
         let units = validarUnidades();
         let details = validarDetalles();
-        /*
-        let name = $("#name").validarNombre();
-        let brand = $("#brand").validarMarca();
-        let model = $("#model").validarModelo();
-        let price = $("#price").validarPrecio();
-        let units = $("#units").validarUnidades();
-        let details = $("#details").validarDetalles();
-        //const image = $("#image").val() || 'img/default.png';
-        */
-
-        // SE CONVIERTE EL JSON DE STRING A OBJETO
-        //let postData = JSON.parse( $('#description').val() );
-        // SE AGREGA AL JSON EL NOMBRE DEL PRODUCTO
-        //postData['nombre'] = $('#name').val();
-        //postData['id'] = $('#productId').val();
-
-        
-        //AQUÍ DEBES AGREGAR LAS VALIDACIONES DE LOS DATOS EN EL JSON
-        //EN CASO DE NO HABER ERRORES, SE ENVIAR EL PRODUCTO A AGREGAR
         
         if (validarNombre(name) && validarMarca(brand) && validarModelo(model) && validarPrecio(price) && validarUnidades(units) && validarDetalles(details)) {
             // SE HACEN LAS VALIDACIONES
@@ -273,12 +254,9 @@ $(document).ready(function(){
                 // SE CREA UNA PLANTILLA PARA CREAR INFORMACIÓN DE LA BARRA DE ESTADO
                 let template_bar = '';
                 template_bar += `
-                            <li style="list-style: none;">status: ${respuesta.status}</li>
-                            <li style="list-style: none;">message: ${respuesta.message}</li>
+                            <div class="alert alert-${respuesta.status}">${respuesta.message}</div>
                         `;
-                // SE REINICIA EL FORMULARIO
-                //$('#name').val('');
-                //$('#description').val(JsonString);
+              
                 // SE INSERTA LA PLANTILLA PARA LA BARRA DE ESTADO
                 $('#container').html(template_bar);
                 // SE HACE VISIBLE LA BARRA DE ESTADO
@@ -300,6 +278,15 @@ $(document).ready(function(){
             const id = $(element).attr('productId');
             $.post('./backend/product-delete.php', {id}, (response) => {
                 $('#product-result').hide();
+                let respuesta = JSON.parse(response);
+                // SE CREA UNA PLANTILLA PARA CREAR INFORMACIÓN DE LA BARRA DE ESTADO
+                let template_bar = '';
+                template_bar += `
+                            <div class="alert alert-${respuesta.status}">${respuesta.message}</div>
+                        `;
+                $('#container').html(template_bar);
+                // SE HACE VISIBLE LA BARRA DE ESTADO
+                $('#product-result').show();
                 listarProductos();
             });
         }
@@ -319,10 +306,7 @@ $(document).ready(function(){
             delete(product.nombre);
             delete(product.eliminado);
             delete(product.id);
-            // SE CONVIERTE EL OBJETO JSON EN STRING
-            //let JsonString = JSON.stringify(product,null,2);
-            // SE MUESTRA STRING EN EL <textarea>
-            //$('#description').val(JsonString);
+           
             $('#brand').val(product.marca);
             $('#model').val(product.modelo);
             $('#price').val(product.precio);
