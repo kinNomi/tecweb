@@ -190,42 +190,76 @@ $(document).ready(function(){
     $('#product-form').submit(e => {
         e.preventDefault();
 
+        //VALIDACIONES
+        const name = $("#name").val();
+        const brand = $("#brand").val();
+        const model = $("#model").val();
+        const price = $("#price").val();
+        const units = $("#units").val();
+        const details = $("#details").val();
+        //const image = $("#image").val() || 'img/default.png';
+
+
         // SE CONVIERTE EL JSON DE STRING A OBJETO
-        let postData = JSON.parse( $('#description').val() );
+        //let postData = JSON.parse( $('#description').val() );
         // SE AGREGA AL JSON EL NOMBRE DEL PRODUCTO
-        postData['nombre'] = $('#name').val();
-        postData['id'] = $('#productId').val();
+        //postData['nombre'] = $('#name').val();
+        //postData['id'] = $('#productId').val();
 
-        /**
-         * AQUÍ DEBES AGREGAR LAS VALIDACIONES DE LOS DATOS EN EL JSON
-         * --> EN CASO DE NO HABER ERRORES, SE ENVIAR EL PRODUCTO A AGREGAR
-         **/
-
-        const url = edit === false ? './backend/product-add.php' : './backend/product-edit.php';
         
-        $.post(url, postData, (response) => {
-            console.log(response);
-            // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
-            let respuesta = JSON.parse(response);
-            // SE CREA UNA PLANTILLA PARA CREAR INFORMACIÓN DE LA BARRA DE ESTADO
-            let template_bar = '';
-            template_bar += `
-                        <li style="list-style: none;">status: ${respuesta.status}</li>
-                        <li style="list-style: none;">message: ${respuesta.message}</li>
-                    `;
-            // SE REINICIA EL FORMULARIO
-            $('#name').val('');
-            $('#description').val(JsonString);
-            // SE HACE VISIBLE LA BARRA DE ESTADO
-            $('#product-result').show();
-            // SE INSERTA LA PLANTILLA PARA LA BARRA DE ESTADO
-            $('#container').html(template_bar);
-            // SE LISTAN TODOS LOS PRODUCTOS
-            listarProductos();
-            // SE REGRESA LA BANDERA DE EDICIÓN A false
-            edit = false;
-        });
+        //AQUÍ DEBES AGREGAR LAS VALIDACIONES DE LOS DATOS EN EL JSON
+        //EN CASO DE NO HABER ERRORES, SE ENVIAR EL PRODUCTO A AGREGAR
+        
+        if (validarNombre(name) && validarMarca(brand) && validarModelo(model) && validarPrecio(price) && validarUnidades(units) && validarDetalles(details)) {
+            // SE HACEN LAS VALIDACIONES
+            const postData = {
+                nombre: name,
+                marca: brand,
+                modelo: model,
+                precio: price,
+                unidades: units,
+                detalles: details,
+                imagen: image || 'img/default.png',
+                id: $("#productId").val() // Include ID for updates
+            };
+
+
+            const url = edit === false ? './backend/product-add.php' : './backend/product-edit.php';
+        
+            $.post(url, postData, (response) => {
+                console.log(response);
+                // SE OBTIENE EL OBJETO DE DATOS A PARTIR DE UN STRING JSON
+                let respuesta = JSON.parse(response);
+                // SE CREA UNA PLANTILLA PARA CREAR INFORMACIÓN DE LA BARRA DE ESTADO
+                let template_bar = '';
+                template_bar += `
+                            <li style="list-style: none;">status: ${respuesta.status}</li>
+                            <li style="list-style: none;">message: ${respuesta.message}</li>
+                        `;
+                // SE REINICIA EL FORMULARIO
+                //$('#name').val('');
+                //$('#description').val(JsonString);
+                // SE INSERTA LA PLANTILLA PARA LA BARRA DE ESTADO
+                $('#container').html(template_bar);
+                // SE HACE VISIBLE LA BARRA DE ESTADO
+                $('#product-result').show();
+                
+                // SE LISTAN TODOS LOS PRODUCTOS
+                listarProductos();
+                // SE REGRESA LA BANDERA DE EDICIÓN A false
+                edit = false;
+            });
+        }
+        
     });
+
+    $("#name").on("input", function() { validarNombre($(this).val()); });
+    $("#brand").on("change", function() { validarMarca($(this).val()); });
+    $("#model").on("input", function() { validarModelo($(this).val()); });
+    $("#price").on("input", function() { validarPrecio($(this).val()); });
+    $("#units").on("input", function() { validarUnidades($(this).val()); });
+    $("#details").on("input", function() { validarDetalles($(this).val()); });
+
 
     $(document).on('click', '.product-delete', (e) => {
         if(confirm('¿Realmente deseas eliminar el producto?')) {
