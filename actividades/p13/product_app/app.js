@@ -8,10 +8,100 @@ var baseJSON = {
     "imagen": "img/default.png"
   };
 
+  //VALIDACIONES
+  function validarNombre() {
+    let name = $('#name').val();
+    let nameStatus = $('#nameStatus');
+    if (name.length === 0) {
+        nameStatus.text('El nombre es requerido.');
+        nameStatus.addClass('text-danger');
+        return false;
+    } else if (name.length > 100) {
+        nameStatus.text('El nombre debe tener 100 caracteres o menos.');
+        nameStatus.addClass('text-danger');
+        return false;
+    } else {
+        nameStatus.text('');
+        nameStatus.removeClass('text-danger');
+        return true;
+    }
+}
+
+function validarMarca() {
+    let brand = $('#brand').val();
+    let brandStatus = $('#brandStatus');
+    if(brand.length===0){
+      brandStatus.text('Debes seleccionar una marca.');
+      brandStatus.addClass('text-danger');
+      return false;
+    }else{
+      brandStatus.text('');
+      brandStatus.removeClass('text-danger');
+      return true;
+    }
+}
+
+
+function validarModelo() {
+    let model = $('#model').val();
+    let modelStatus = $('#modelStatus');
+    if (!model || !/^[a-zA-Z0-9]+$/.test(model) || model.length > 25) {
+        modelStatus.text('Modelo con 25 caracteres o menos.');
+        modelStatus.addClass('text-danger');
+        return false;
+    } else {
+        modelStatus.text('');
+        modelStatus.removeClass('text-danger');
+        return true;
+    }
+}
+
+function validarPrecio() {
+    let price = $('#price').val();
+    let priceStatus = $('#priceStatus');
+    if (!price || parseFloat(price) <= 99.99) {
+        priceStatus.text('Precio mayor a 99.99.');
+        priceStatus.addClass('text-danger');
+        return false;
+    } else {
+        priceStatus.text('');
+        priceStatus.removeClass('text-danger');
+        return true;
+    }
+}
+
+function validarUnidades() {
+    let units = $('#units').val();
+    let unitsStatus = $('#unitsStatus');
+    if (!units || parseInt(units) < 0) {
+        unitsStatus.text('Ingresa unidades positivas.');
+        unitsStatus.addClass('text-danger');
+        return false;
+    } else {
+        unitsStatus.text('');
+        unitsStatus.removeClass('text-danger');
+        return true;
+    }
+}
+
+function validarDetalles() {
+    let details = $('#details').val();
+    let detailsStatus = $('#detailsStatus');
+    if (details && details.length > 250) {
+        detailsStatus.text('Detalles con 250 caracteres o menos.');
+        detailsStatus.addClass('text-danger');
+        return false;
+    } else {
+        detailsStatus.text('');
+        detailsStatus.removeClass('text-danger');
+        return true;
+    }
+}
+
 $(document).ready(function(){
     let edit = false;
 
-    //SE AGREGAN LOS LISTENERS
+    //INICIALIZACION DE LOS EVENTOS DE VALIDACION
     $('#name').on('blur', validarNombre);
     $('#brand').on('blur', validarMarca);
     $('#model').on('blur', validarModelo);
@@ -19,82 +109,7 @@ $(document).ready(function(){
     $('#units').on('blur', validarUnidades);
     $('#details').on('blur', validarDetalles);
 
-    //VALIDACIONES
-    function validarNombre() {
-        let name = $('#name').val();
-        let nameStatus = $('#nameStatus');
-        if (name.length === 0) {
-            nameStatus.text('El nombre es requerido.');
-            nameStatus.addClass('text-danger');
-        } else if (name.length > 100) {
-            nameStatus.text('El nombre debe tener 100 caracteres o menos.');
-            nameStatus.addClass('text-danger');
-        } else {
-            nameStatus.text('');
-            nameStatus.removeClass('text-danger');
-        }
-    }
-
-    function validarMarca() {
-        let brand = $('#brand').val();
-        let brandStatus = $('#brandStatus');
-        if(brand.length===0){
-          brandStatus.text('Debes seleccionar una marca.');
-          brandStatus.addClass('text-danger');
-        }else{
-          brandStatus.text('');
-          brandStatus.removeClass('text-danger');
-        }
-    }
-
-
-    function validarModelo() {
-        let model = $('#model').val();
-        let modelStatus = $('#modelStatus');
-        if (!model || !/^[a-zA-Z0-9]+$/.test(model) || model.length > 25) {
-            modelStatus.text('Modelo con 25 caracteres o menos.');
-            modelStatus.addClass('text-danger');
-        } else {
-            modelStatus.text('');
-            modelStatus.removeClass('text-danger');
-        }
-    }
-
-    function validarPrecio() {
-        let price = $('#price').val();
-        let priceStatus = $('#priceStatus');
-        if (!price || parseFloat(price) <= 99.99) {
-            priceStatus.text('Precio mayor a 99.99.');
-            priceStatus.addClass('text-danger');
-        } else {
-            priceStatus.text('');
-            priceStatus.removeClass('text-danger');
-        }
-    }
-
-    function validarUnidades() {
-        let units = $('#units').val();
-        let unitsStatus = $('#unitsStatus');
-        if (!units || parseInt(units) < 0) {
-            unitsStatus.text('Ingresa unidades positivas.');
-            unitsStatus.addClass('text-danger');
-        } else {
-            unitsStatus.text('');
-            unitsStatus.removeClass('text-danger');
-        }
-    }
-
-    function validarDetalles() {
-        let details = $('#details').val();
-        let detailsStatus = $('#detailsStatus');
-        if (details && details.length > 250) {
-            detailsStatus.text('Detalles con 250 caracteres o menos.');
-            detailsStatus.addClass('text-danger');
-        } else {
-            detailsStatus.text('');
-            detailsStatus.removeClass('text-danger');
-        }
-    }
+    
 
     //let JsonString = JSON.stringify(baseJSON,null,2);
     //$('#description').val(JsonString);
@@ -208,12 +223,12 @@ $(document).ready(function(){
         e.preventDefault();
 
         //VALIDACIONES
-        const name = $("#name").val();
-        const brand = $("#brand").val();
-        const model = $("#model").val();
-        const price = $("#price").val();
-        const units = $("#units").val();
-        const details = $("#details").val();
+        const name = $("#name").validarNombre();
+        const brand = $("#brand").validarMarca();
+        const model = $("#model").validarModelo();
+        const price = $("#price").validarPrecio();
+        const units = $("#units").validarUnidades();
+        const details = $("#details").validarDetalles();
         //const image = $("#image").val() || 'img/default.png';
 
 
@@ -230,14 +245,14 @@ $(document).ready(function(){
         if (validarNombre(name) && validarMarca(brand) && validarModelo(model) && validarPrecio(price) && validarUnidades(units) && validarDetalles(details)) {
             // SE HACEN LAS VALIDACIONES
             let postData = {
-                nombre: name,
-                marca: brand,
-                modelo: model,
-                precio: price,
-                unidades: units,
-                detalles: details,
-                imagen: image || 'img/default.png',
-                id: $("#productId").val() // Include ID for updates
+                nombre: $('#name').val(),
+                id: $('#productId').val(),
+                marca: $('#brand').val(),
+                modelo: $('#model').val(),
+                precio: parseFloat($('#price').val()),
+                unidades: parseInt($('#units').val()),
+                detalles: $('#details').val(),
+                imagen: $('#image').val() || 'img/default.png'
             };
 
 
@@ -271,7 +286,6 @@ $(document).ready(function(){
     });
 
     
-
     $(document).on('click', '.product-delete', (e) => {
         if(confirm('¿Realmente deseas eliminar el producto?')) {
             const element = $(this)[0].activeElement.parentElement.parentElement;
@@ -298,10 +312,15 @@ $(document).ready(function(){
             delete(product.eliminado);
             delete(product.id);
             // SE CONVIERTE EL OBJETO JSON EN STRING
-            let JsonString = JSON.stringify(product,null,2);
+            //let JsonString = JSON.stringify(product,null,2);
             // SE MUESTRA STRING EN EL <textarea>
-            $('#description').val(JsonString);
-            
+            //$('#description').val(JsonString);
+            $('#brand').val(product.marca);
+            $('#model').val(product.modelo);
+            $('#price').val(product.precio);
+            $('#units').val(product.unidades);
+            $('#details').val(product.detalles);
+            $('#image').val(product.imagen);
             // SE PONE LA BANDERA DE EDICIÓN EN true
             edit = true;
         });
