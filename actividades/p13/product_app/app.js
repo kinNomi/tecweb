@@ -11,71 +11,88 @@ var baseJSON = {
 $(document).ready(function(){
     let edit = false;
 
+    //SE AGREGAN LOS LISTENERS
+    $('#name').on('blur', validarNombre);
+    $('#brand').on('blur', validarMarca);
+    $('#model').on('blur', validarModelo);
+    $('#price').on('blur', validarPrecio);
+    $('#units').on('blur', validarUnidades);
+    $('#details').on('blur', validarDetalles);
+
     //VALIDACIONES
-    function validarNombre(name) {
-        // Check for required field and length (100 chars max)
-        if (!name || name.length > 100) {
-            $("#nameStatus").text("Nombre 100 caracteres o menos.");
-            return false;
+    function validarNombre() {
+        let name = $('#name').val();
+        let nameStatus = $('#nameStatus');
+        if (name.length === 0) {
+            nameStatus.text('El nombre es requerido.');
+            nameStatus.addClass('text-danger');
+        } else if (name.length > 100) {
+            nameStatus.text('El nombre debe tener 100 caracteres o menos.');
+            nameStatus.addClass('text-danger');
         } else {
-            $("#nameStatus").text("");
-            return true;
+            nameStatus.text('');
+            nameStatus.removeClass('text-danger');
         }
     }
 
-    function validarMarca(brand) {
-      // Check for required selection.
-      if (!brand) {
-          $("#brandStatus").text("Marca requerida.");
-          return false;
-      } else {
-          $("#brandStatus").text("");
-          return true;
-      }
+    function validarMarca() {
+        let brand = $('#brand').val();
+        let brandStatus = $('#brandStatus');
+        if(brand.length===0){
+          brandStatus.text('Debes seleccionar una marca.');
+          brandStatus.addClass('text-danger');
+        }else{
+          brandStatus.text('');
+          brandStatus.removeClass('text-danger');
+        }
     }
 
 
-    function validarModelo(model) {
-        // Check for required field, alphanumeric characters, and length (25 chars max)
+    function validarModelo() {
+        let model = $('#model').val();
+        let modelStatus = $('#modelStatus');
         if (!model || !/^[a-zA-Z0-9]+$/.test(model) || model.length > 25) {
-            $("#modelStatus").text("Modelo con 25 caracteres o menos.");
-            return false;
+            modelStatus.text('Modelo con 25 caracteres o menos.');
+            modelStatus.addClass('text-danger');
         } else {
-            $("#modelStatus").text("");
-            return true;
+            modelStatus.text('');
+            modelStatus.removeClass('text-danger');
         }
     }
 
-    function validarPrecio(price) {
-        // Check for required field and minimum value
+    function validarPrecio() {
+        let price = $('#price').val();
+        let priceStatus = $('#priceStatus');
         if (!price || parseFloat(price) <= 99.99) {
-            $("#priceStatus").text("Precio mayor a 99.99.");
-            return false;
+            priceStatus.text('Precio mayor a 99.99.');
+            priceStatus.addClass('text-danger');
         } else {
-            $("#priceStatus").text("");
-            return true;
+            priceStatus.text('');
+            priceStatus.removeClass('text-danger');
         }
     }
 
-    function validarUnidades(units) {
-        // Check for required field and non-negative value
+    function validarUnidades() {
+        let units = $('#units').val();
+        let unitsStatus = $('#unitsStatus');
         if (!units || parseInt(units) < 0) {
-            $("#unitsStatus").text("Unidades positivas.");
-            return false;
+            unitsStatus.text('Ingresa unidades positivas.');
+            unitsStatus.addClass('text-danger');
         } else {
-            $("#unitsStatus").text("");
-            return true;
+            unitsStatus.text('');
+            unitsStatus.removeClass('text-danger');
         }
     }
 
-    function validarDetalles(details) {
-        // Check for maximum length (250 chars)
+    function validarDetalles() {
+        let details = $('#details').val();
+        let detailsStatus = $('#detailsStatus');
         if (details && details.length > 250) {
-            $("#detailsStatus").text("Detalles con 250 caracteres o menos.");
-            return false;
+            detailsStatus.text('Detalles con 250 caracteres o menos.');
+            detailsStatus.addClass('text-danger');
         } else {
-            $("#detailsStatus").text("");
-            return true;
+            detailsStatus.text('');
+            detailsStatus.removeClass('text-danger');
         }
     }
 
