@@ -229,7 +229,7 @@ $(document).ready(function(){
         
         if (validarNombre(name) && validarMarca(brand) && validarModelo(model) && validarPrecio(price) && validarUnidades(units) && validarDetalles(details)) {
             // SE HACEN LAS VALIDACIONES
-            const postData = {
+            let postData = {
                 nombre: name,
                 marca: brand,
                 modelo: model,
@@ -270,13 +270,7 @@ $(document).ready(function(){
         
     });
 
-    $("#name").on("input", function() { validarNombre($(this).val()); });
-    $("#brand").on("change", function() { validarMarca($(this).val()); });
-    $("#model").on("input", function() { validarModelo($(this).val()); });
-    $("#price").on("input", function() { validarPrecio($(this).val()); });
-    $("#units").on("input", function() { validarUnidades($(this).val()); });
-    $("#details").on("input", function() { validarDetalles($(this).val()); });
-
+    
 
     $(document).on('click', '.product-delete', (e) => {
         if(confirm('¿Realmente deseas eliminar el producto?')) {
