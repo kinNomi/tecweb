@@ -45,7 +45,8 @@ function validarMarca() {
 function validarModelo() {
     let model = $('#model').val();
     let modelStatus = $('#modelStatus');
-    if (!model || !/^[a-zA-Z0-9]+$/.test(model) || model.length > 25) {
+    const regex = /^[a-zA-Z0-9]{1,25}$/;
+    if (!model || !regex.test(model) || model.length > 25) {
         modelStatus.text('Modelo con 25 caracteres o menos.');
         modelStatus.addClass('text-danger');
         return false;
@@ -57,7 +58,7 @@ function validarModelo() {
 }
 
 function validarPrecio() {
-    let price = $('#price').val();
+    let price = parseFloat($('#price').val());
     let priceStatus = $('#priceStatus');
     if (!price || parseFloat(price) <= 99.99) {
         priceStatus.text('Precio mayor a 99.99.');
@@ -73,7 +74,7 @@ function validarPrecio() {
 function validarUnidades() {
     let units = $('#units').val();
     let unitsStatus = $('#unitsStatus');
-    if (!units || parseInt(units) < 0) {
+    if (isNaN(units) || units < 0) {
         unitsStatus.text('Ingresa unidades positivas.');
         unitsStatus.addClass('text-danger');
         return false;
@@ -223,14 +224,21 @@ $(document).ready(function(){
         e.preventDefault();
 
         //VALIDACIONES
-        const name = $("#name").validarNombre();
-        const brand = $("#brand").validarMarca();
-        const model = $("#model").validarModelo();
-        const price = $("#price").validarPrecio();
-        const units = $("#units").validarUnidades();
-        const details = $("#details").validarDetalles();
+        let name = validarNombre();
+        let brand = validarMarca();
+        let model = validarModelo();
+        let price = validarPrecio();
+        let units = validarUnidades();
+        let details = validarDetalles();
+        /*
+        let name = $("#name").validarNombre();
+        let brand = $("#brand").validarMarca();
+        let model = $("#model").validarModelo();
+        let price = $("#price").validarPrecio();
+        let units = $("#units").validarUnidades();
+        let details = $("#details").validarDetalles();
         //const image = $("#image").val() || 'img/default.png';
-
+        */
 
         // SE CONVIERTE EL JSON DE STRING A OBJETO
         //let postData = JSON.parse( $('#description').val() );
