@@ -160,6 +160,31 @@ $(document).ready(function(){
         });
     }
 
+    //BUSCAR POR NOMBRE
+    $('#name').keyup(function() {
+        let name = $(this).val().trim();
+    
+        if (name.length > 0) {
+            $.ajax({
+                url: 'backend/product-singleByName.php',
+                type: 'GET',
+                data: { name },
+                success: function(response) {
+                    console.log(response);
+                    let result = JSON.parse(response);
+                    if (result.exists) {
+                        $('#nameStatus').text("El nombre del producto ya existe").removeClass("text-success").addClass("text-danger");
+                    } else {
+                        $('#nameStatus').text("Nombre disponible").removeClass("text-danger").addClass("text-success");
+                    }
+                }
+            });
+        } else {
+            $('#nameStatus').text("").removeClass("text-danger text-success");
+        }
+    });
+
+    //BUSCAR
     $('#search').keyup(function() {
         if($('#search').val()) {
             let search = $('#search').val();

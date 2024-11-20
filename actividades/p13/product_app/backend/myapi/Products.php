@@ -150,32 +150,38 @@ class Products extends DataBase {
         }
     }
 
-    public function singleByName($nombre){
-        if( isset($nombre) ) {
-            // SE REALIZA LA QUERY DE BÚSQUEDA Y AL MISMO TIEMPO SE VALIDA SI HUBO RESULTADOS
-            if ( $result = $this->conexion->query("SELECT * FROM productos WHERE nombre = {$nombre} AND eliminado = 0") ) {
-                // SE OBTIENEN LOS RESULTADOS
+    public function singleByName($name) {
+        if (isset($name)) {
+            // Escapar el valor para prevenir inyecciones SQL
+            $name = $this->conexion->real_escape_string($name);
+    
+            // Realizar la consulta a la base de datos
+            if ($result = $this->conexion->query("SELECT COUNT(*) AS count FROM productos WHERE nombre = '{$name}' AND eliminado = 0")) {
+                // Obtener los resultados
                 $row = $result->fetch_assoc();
     
-                if(!is_null($row)) {
-                    // SE CODIFICAN A UTF-8 LOS DATOS Y SE MAPEAN AL ARREGLO DE RESPUESTA
-                    foreach($row as $key => $value) {
-                        $this->data[$key] = $value;
-                    }
-                    $result->free();
-
-                }else {
-                    $this->data = array(
-                        'status' => 'error',
-                        'message' => 'No se encontró el producto con ese nombre'
-                    );
+                // Validar si el producto existe
+                if (!is_null($row) && $row['count'] > 0) {
+                    $this->data = [
+                        'exists'  => true,
+                        'message' => 'El producto ya existe.'
+                    ];
+                } else {
+                    $this->data = [
+                        'exists'  => false,
+                        'message' => 'El producto no existe.'
+                    ];
                 }
+                $result->free();
             } else {
-                die('Query Error: '.mysqli_error($this->conexion));
+                die('Query Error: ' . mysqli_error($this->conexion));
             }
+    
+            // Cerrar la conexión
             $this->conexion->close();
         }
     }
+    
     
 
     public function getData() {
