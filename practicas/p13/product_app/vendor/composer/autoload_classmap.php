@@ -10,7 +10,6 @@ return array(
     'TECWEB\\MYAPI\\Create\\Create' => $baseDir . '/backend/myapi/Create/Create.php',
     'TECWEB\\MYAPI\\DataBase\\DataBase' => $baseDir . '/backend/myapi/DataBase/DataBase.php',
     'TECWEB\\MYAPI\\Delete\\Delete' => $baseDir . '/backend/myapi/Delete/Delete.php',
-    'TECWEB\\MYAPI\\Products' => $baseDir . '/backend/myapi/Products.php',
     'TECWEB\\MYAPI\\Read\\Read' => $baseDir . '/backend/myapi/Read/Read.php',
     'TECWEB\\MYAPI\\Update\\Update' => $baseDir . '/backend/myapi/Update/Update.php',
 );

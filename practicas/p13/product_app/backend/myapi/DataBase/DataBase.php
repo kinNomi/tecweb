@@ -1,5 +1,5 @@
 <?php
-namespace TECWEB\MYAPI\DataBase;
+namespace TECWEB\MYAPI\Database;
 
 abstract class DataBase {
     protected $conexion;
@@ -8,9 +8,13 @@ abstract class DataBase {
     public function __construct($db, $user, $pass) {
         $this->conexion = @mysqli_connect(
             'localhost',
+            'root',
+            'kin12345',
+            'marketzone'
+            /*
             $user,
             $pass,
-            $db
+            $db*/
         );
     
         /**
