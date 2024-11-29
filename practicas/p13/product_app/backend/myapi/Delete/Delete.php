@@ -2,7 +2,7 @@
 
 namespace TECWEB\MYAPI\Delete;
 
-require_once __DIR__ ."/../DataBase.php";
+require_once __DIR__ . '/../Database/DataBase.php';
 
 use TECWEB\MYAPI\Database\DataBase;
 
