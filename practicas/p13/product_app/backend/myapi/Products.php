@@ -150,10 +150,45 @@ class Products extends DataBase {
         }
     }
 
+    public function singleByName($name) {
+        if (isset($name)) {
+            // Escapar el valor para prevenir inyecciones SQL
+            $name = $this->conexion->real_escape_string($name);
+    
+            // Realizar la consulta a la base de datos
+            if ($result = $this->conexion->query("SELECT COUNT(*) AS count FROM productos WHERE nombre = '{$name}' AND eliminado = 0")) {
+                // Obtener los resultados
+                $row = $result->fetch_assoc();
+    
+                // Validar si el producto existe
+                if (!is_null($row) && $row['count'] > 0) {
+                    $this->data = [
+                        'exists'  => true,
+                        'message' => 'El producto ya existe.'
+                    ];
+                } else {
+                    $this->data = [
+                        'exists'  => false,
+                        'message' => 'El producto no existe.'
+                    ];
+                }
+                $result->free();
+            } else {
+                die('Query Error: ' . mysqli_error($this->conexion));
+            }
+    
+            // Cerrar la conexión
+            $this->conexion->close();
+        }
+    }
+    
+    
+
     public function getData() {
         // SE HACE LA CONVERSIÓN DE ARRAY A JSON
-        return json_encode($this->response, JSON_PRETTY_PRINT);
+        return json_encode($this->data, JSON_PRETTY_PRINT);
     }
 }
 
+//$productos = new Productos();
 ?>
