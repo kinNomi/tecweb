@@ -2,7 +2,7 @@
 
 namespace TECWEB\MYAPI\Create;
 
-require_once __DIR__ ."/../Database.php";
+require_once __DIR__ ."/../DataBase.php";
 
 use TECWEB\MYAPI\Database\Database;
 
