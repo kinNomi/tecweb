@@ -33,10 +33,44 @@
               <form id="product-form">
                 <div class="form-group">
                   <input class="form-control" type="text" id="name" placeholder="Nombre de producto">
+                  <small id="nameStatus" class="form-text text-muted"></small>
                 </div>
+
                 <div class="form-group">
-                  <textarea class="form-control" id="description" cols="30" rows="10" placeholder="JSON de producto"></textarea>
+                  <select class="form-control" id="brand">
+                    <option value="">Selecciona marca</option>
+                    <option value="Audi">Audi</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Ford">Ford</option>
+                    <option value="VW">VW</option>
+                  </select>
+                  <small id="brandStatus" class=" form-text text-muted"></small>
                 </div>
+
+                <div class="form-group">
+                  <input class="form-control" type="text" id="model" placeholder="Modelo">
+                  <small id="modelStatus" class="form-text text-muted"></small>
+                </div>
+
+                <div class="form-group">
+                  <input class="form-control" type="number" step="0.01" id="price" placeholder="Precio">
+                  <small id="priceStatus" class="form-text text-muted"></small>
+                </div>
+
+                <div class="form-group">
+                  <input class="form-control" type="number" id="units" placeholder="Unidades">
+                  <small id="unitsStatus" class="form-text text-muted"></small>
+                </div>
+
+                <div class="form-group">
+                  <textarea class="form-control" id="details" rows="2" placeholder="Detalles"></textarea>
+                  <small id="detailsStatus" class="form-text text-muted"></small>
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" type="text" id="image" placeholder="Ruta de imagen (opcional)">
+                </div>
+                
                 <input type="hidden" id="productId">
                 <button class="btn btn-primary btn-block text-center" type="submit">
                   Agregar Producto
