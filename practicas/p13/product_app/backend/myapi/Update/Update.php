@@ -6,7 +6,7 @@ require_once __DIR__ ."/../Database.php";
 
 use TECWEB\MYAPI\Database\Database;
 
-class Delete extends Database {
+class Update extends Database {
 
     public function __construct($db,$user = 'root', $pass = 'kin12345') {
         parent::__construct($db,$user,$pass);
