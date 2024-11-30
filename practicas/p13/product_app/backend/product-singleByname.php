@@ -5,6 +5,8 @@
     
 
     $productos = new Read('marketzone');
-    $productos->list();
+    $productos->singleByName( $_GET['name'] );
     echo $productos->getData();
+
+
 ?>
